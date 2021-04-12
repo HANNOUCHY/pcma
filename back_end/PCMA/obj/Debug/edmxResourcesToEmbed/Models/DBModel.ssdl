@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PCMAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Action">
+    <Key>
+      <PropertyRef Name="ActionID" />
+    </Key>
+    <Property Name="ActionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategorieID" Type="int" />
+    <Property Name="CheckID" Type="int" />
+    <Property Name="ResAction" Type="varchar" MaxLength="50" />
+    <Property Name="TextAction" Type="varchar" MaxLength="50" />
+    <Property Name="DossierID" Type="int" />
+  </EntityType>
+  <EntityType Name="Categorie">
+    <Key>
+      <PropertyRef Name="CategorieID" />
+    </Key>
+    <Property Name="CategorieID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TextCategorie" Type="varchar" MaxLength="100" />
+    <Property Name="TabsID" Type="int" />
+  </EntityType>
+  <EntityType Name="Club">
+    <Key>
+      <PropertyRef Name="ClubID" />
+    </Key>
+    <Property Name="ClubID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NomClub" Type="varchar" MaxLength="50" />
+    <Property Name="EmailClub" Type="varchar" MaxLength="50" />
+    <Property Name="TelClub" Type="varchar" MaxLength="50" />
+    <Property Name="CompetitionID" Type="int" />
+    <Property Name="MedecinID" Type="int" />
+    <Property Name="AJoueurID" Type="int" />
+  </EntityType>
+  <EntityType Name="Comp_Club">
+    <Key>
+      <PropertyRef Name="Comp_ClubID" />
+    </Key>
+    <Property Name="Comp_ClubID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClubID" Type="int" />
+    <Property Name="CompetitionID" Type="int" />
+    <Property Name="DateComp_Club" Type="date" />
+    <Property Name="MedecinID" Type="int" />
+  </EntityType>
+  <EntityType Name="Competition">
+    <Key>
+      <PropertyRef Name="CompetitionID" />
+    </Key>
+    <Property Name="CompetitionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NomCompetition" Type="varchar" MaxLength="50" />
+    <Property Name="RegimeCompetition" Type="varchar" MaxLength="50" />
+    <Property Name="CategorieCompetition" Type="varchar" MaxLength="50" />
+    <Property Name="SaisonID" Type="int" />
+  </EntityType>
+  <EntityType Name="Confirmation">
+    <Key>
+      <PropertyRef Name="ConfirmationID" />
+    </Key>
+    <Property Name="ConfirmationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DossierID" Type="int" />
+    <Property Name="UtilisateurID" Type="int" />
+    <Property Name="Confirmation" Type="varchar" MaxLength="50" />
+    <Property Name="DateConfirmation" Type="date" />
+  </EntityType>
+  <EntityType Name="Controle">
+    <Key>
+      <PropertyRef Name="ConroleID" />
+    </Key>
+    <Property Name="ConroleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TextControle" Type="varchar" MaxLength="100" />
+    <Property Name="TypeControle" Type="varchar" MaxLength="50" />
+    <Property Name="CategorieID" Type="int" />
+  </EntityType>
+  <EntityType Name="Dossier">
+    <Key>
+      <PropertyRef Name="DossierID" />
+    </Key>
+    <Property Name="DossierID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="JoueurID" Type="int" />
+    <Property Name="ClubID" Type="int" />
+    <Property Name="MedecinID" Type="int" />
+    <Property Name="DateDossier" Type="varchar" MaxLength="50" />
+    <Property Name="FileDossier" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="File">
+    <Key>
+      <PropertyRef Name="FileID" />
+    </Key>
+    <Property Name="FileID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FileName" Type="varchar" MaxLength="50" />
+    <Property Name="DossierID" Type="int" />
+  </EntityType>
+  <EntityType Name="Joueur">
+    <Key>
+      <PropertyRef Name="JoueurID" />
+    </Key>
+    <Property Name="JoueurID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NomJoueur" Type="varchar" MaxLength="50" />
+    <Property Name="PrenomJoueur" Type="varchar" MaxLength="50" />
+    <Property Name="EmailJoueur" Type="varchar" MaxLength="50" />
+    <Property Name="GsmJoueur" Type="varchar" MaxLength="50" />
+    <Property Name="DatenJoueur" Type="date" />
+    <Property Name="PosteJoueur" Type="varchar" MaxLength="50" />
+    <Property Name="LateralisationJoueur" Type="varchar" MaxLength="50" />
+    <Property Name="ClubID" Type="int" />
+    <Property Name="PhotoJoueur" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Profil">
+    <Key>
+      <PropertyRef Name="ProfilID" />
+    </Key>
+    <Property Name="ProfilID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NomProfil" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Saison">
+    <Key>
+      <PropertyRef Name="SaisonID" />
+    </Key>
+    <Property Name="SaisonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NomSaison" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Utilisateur">
+    <Key>
+      <PropertyRef Name="UtilisateurID" />
+    </Key>
+    <Property Name="UtilisateurID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NomUtilisateur" Type="varchar" MaxLength="50" />
+    <Property Name="PrenomUtilisateur" Type="varchar" MaxLength="50" />
+    <Property Name="MdpUtilisateur" Type="varchar" MaxLength="200" />
+    <Property Name="EmailUtilisateur" Type="varchar" MaxLength="50" />
+    <Property Name="GsmUtilisateur" Type="varchar" MaxLength="50" />
+    <Property Name="ProfilUtilisateur" Type="int" />
+    <Property Name="IdChar" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityContainer Name="PCMAModelStoreContainer">
+    <EntitySet Name="Action" EntityType="Self.Action" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Categorie" EntityType="Self.Categorie" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Club" EntityType="Self.Club" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Comp_Club" EntityType="Self.Comp_Club" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Competition" EntityType="Self.Competition" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Confirmation" EntityType="Self.Confirmation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Controle" EntityType="Self.Controle" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Dossier" EntityType="Self.Dossier" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="File" EntityType="Self.File" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Joueur" EntityType="Self.Joueur" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Profil" EntityType="Self.Profil" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Saison" EntityType="Self.Saison" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Utilisateur" EntityType="Self.Utilisateur" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

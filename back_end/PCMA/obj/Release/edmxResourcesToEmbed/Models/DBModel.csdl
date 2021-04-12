@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PCMAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Utilisateur">
+    <Key>
+      <PropertyRef Name="UtilisateurID" />
+    </Key>
+    <Property Name="UtilisateurID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NomUtilisateur" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PrenomUtilisateur" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MdpUtilisateur" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="EmailUtilisateur" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="GsmUtilisateur" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ProfilUtilisateur" Type="Int32" />
+    <Property Name="IdChar" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityContainer Name="DBModel" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Utilisateur" EntityType="Self.Utilisateur" />
+    <EntitySet Name="Profil" EntityType="PCMAModel.Profil" />
+    <EntitySet Name="Saison" EntityType="PCMAModel.Saison" />
+    <EntitySet Name="Competition" EntityType="PCMAModel.Competition" />
+    <EntitySet Name="Joueur" EntityType="PCMAModel.Joueur" />
+    <EntitySet Name="Club" EntityType="PCMAModel.Club" />
+    <EntitySet Name="Comp_Club" EntityType="PCMAModel.Comp_Club" />
+    <EntitySet Name="Action" EntityType="PCMAModel.Action" />
+    <EntitySet Name="Dossier" EntityType="PCMAModel.Dossier" />
+    <EntitySet Name="Categorie" EntityType="PCMAModel.Categorie" />
+    <EntitySet Name="Controle" EntityType="PCMAModel.Controle" />
+    <EntitySet Name="Confirmation" EntityType="PCMAModel.Confirmation" />
+    <EntitySet Name="File" EntityType="PCMAModel.File" />
+  </EntityContainer>
+  <EntityType Name="Profil">
+    <Key>
+      <PropertyRef Name="ProfilID" />
+    </Key>
+    <Property Name="ProfilID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NomProfil" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Saison">
+    <Key>
+      <PropertyRef Name="SaisonID" />
+    </Key>
+    <Property Name="SaisonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NomSaison" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Competition">
+    <Key>
+      <PropertyRef Name="CompetitionID" />
+    </Key>
+    <Property Name="CompetitionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NomCompetition" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RegimeCompetition" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CategorieCompetition" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SaisonID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Joueur">
+    <Key>
+      <PropertyRef Name="JoueurID" />
+    </Key>
+    <Property Name="JoueurID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NomJoueur" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PrenomJoueur" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EmailJoueur" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="GsmJoueur" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DatenJoueur" Type="DateTime" Precision="0" />
+    <Property Name="PosteJoueur" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LateralisationJoueur" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ClubID" Type="Int32" />
+    <Property Name="PhotoJoueur" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Club">
+    <Key>
+      <PropertyRef Name="ClubID" />
+    </Key>
+    <Property Name="ClubID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NomClub" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EmailClub" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TelClub" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CompetitionID" Type="Int32" />
+    <Property Name="MedecinID" Type="Int32" />
+    <Property Name="AJoueurID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Comp_Club">
+    <Key>
+      <PropertyRef Name="Comp_ClubID" />
+    </Key>
+    <Property Name="Comp_ClubID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClubID" Type="Int32" />
+    <Property Name="CompetitionID" Type="Int32" />
+    <Property Name="DateComp_Club" Type="DateTime" Precision="0" />
+    <Property Name="MedecinID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Action">
+    <Key>
+      <PropertyRef Name="ActionID" />
+    </Key>
+    <Property Name="ActionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategorieID" Type="Int32" />
+    <Property Name="CheckID" Type="Int32" />
+    <Property Name="ResAction" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TextAction" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DossierID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Dossier">
+    <Key>
+      <PropertyRef Name="DossierID" />
+    </Key>
+    <Property Name="DossierID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="JoueurID" Type="Int32" />
+    <Property Name="ClubID" Type="Int32" />
+    <Property Name="MedecinID" Type="Int32" />
+    <Property Name="DateDossier" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FileDossier" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Categorie">
+    <Key>
+      <PropertyRef Name="CategorieID" />
+    </Key>
+    <Property Name="CategorieID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TextCategorie" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="TabsID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Controle">
+    <Key>
+      <PropertyRef Name="ConroleID" />
+    </Key>
+    <Property Name="ConroleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TextControle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="TypeControle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CategorieID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Confirmation">
+    <Key>
+      <PropertyRef Name="ConfirmationID" />
+    </Key>
+    <Property Name="ConfirmationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DossierID" Type="Int32" />
+    <Property Name="UtilisateurID" Type="Int32" />
+    <Property Name="Confirmation1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DateConfirmation" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="File">
+    <Key>
+      <PropertyRef Name="FileID" />
+    </Key>
+    <Property Name="FileID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DossierID" Type="Int32" />
+  </EntityType>
+</Schema>

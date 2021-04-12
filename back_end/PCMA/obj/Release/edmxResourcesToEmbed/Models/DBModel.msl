@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PCMAModelStoreContainer" CdmEntityContainer="DBModel">
+    <EntitySetMapping Name="Utilisateur">
+      <EntityTypeMapping TypeName="PCMAModel.Utilisateur">
+        <MappingFragment StoreEntitySet="Utilisateur">
+          <ScalarProperty Name="IdChar" ColumnName="IdChar" />
+          <ScalarProperty Name="UtilisateurID" ColumnName="UtilisateurID" />
+          <ScalarProperty Name="NomUtilisateur" ColumnName="NomUtilisateur" />
+          <ScalarProperty Name="PrenomUtilisateur" ColumnName="PrenomUtilisateur" />
+          <ScalarProperty Name="MdpUtilisateur" ColumnName="MdpUtilisateur" />
+          <ScalarProperty Name="EmailUtilisateur" ColumnName="EmailUtilisateur" />
+          <ScalarProperty Name="GsmUtilisateur" ColumnName="GsmUtilisateur" />
+          <ScalarProperty Name="ProfilUtilisateur" ColumnName="ProfilUtilisateur" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Profil">
+      <EntityTypeMapping TypeName="PCMAModel.Profil">
+        <MappingFragment StoreEntitySet="Profil">
+          <ScalarProperty Name="NomProfil" ColumnName="NomProfil" />
+          <ScalarProperty Name="ProfilID" ColumnName="ProfilID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Saison">
+      <EntityTypeMapping TypeName="PCMAModel.Saison">
+        <MappingFragment StoreEntitySet="Saison">
+          <ScalarProperty Name="NomSaison" ColumnName="NomSaison" />
+          <ScalarProperty Name="SaisonID" ColumnName="SaisonID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Competition">
+      <EntityTypeMapping TypeName="PCMAModel.Competition">
+        <MappingFragment StoreEntitySet="Competition">
+          <ScalarProperty Name="SaisonID" ColumnName="SaisonID" />
+          <ScalarProperty Name="CategorieCompetition" ColumnName="CategorieCompetition" />
+          <ScalarProperty Name="RegimeCompetition" ColumnName="RegimeCompetition" />
+          <ScalarProperty Name="NomCompetition" ColumnName="NomCompetition" />
+          <ScalarProperty Name="CompetitionID" ColumnName="CompetitionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Joueur">
+      <EntityTypeMapping TypeName="PCMAModel.Joueur">
+        <MappingFragment StoreEntitySet="Joueur">
+          <ScalarProperty Name="PhotoJoueur" ColumnName="PhotoJoueur" />
+          <ScalarProperty Name="ClubID" ColumnName="ClubID" />
+          <ScalarProperty Name="LateralisationJoueur" ColumnName="LateralisationJoueur" />
+          <ScalarProperty Name="PosteJoueur" ColumnName="PosteJoueur" />
+          <ScalarProperty Name="DatenJoueur" ColumnName="DatenJoueur" />
+          <ScalarProperty Name="GsmJoueur" ColumnName="GsmJoueur" />
+          <ScalarProperty Name="EmailJoueur" ColumnName="EmailJoueur" />
+          <ScalarProperty Name="PrenomJoueur" ColumnName="PrenomJoueur" />
+          <ScalarProperty Name="NomJoueur" ColumnName="NomJoueur" />
+          <ScalarProperty Name="JoueurID" ColumnName="JoueurID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Club">
+      <EntityTypeMapping TypeName="PCMAModel.Club">
+        <MappingFragment StoreEntitySet="Club">
+          <ScalarProperty Name="AJoueurID" ColumnName="AJoueurID" />
+          <ScalarProperty Name="MedecinID" ColumnName="MedecinID" />
+          <ScalarProperty Name="CompetitionID" ColumnName="CompetitionID" />
+          <ScalarProperty Name="TelClub" ColumnName="TelClub" />
+          <ScalarProperty Name="EmailClub" ColumnName="EmailClub" />
+          <ScalarProperty Name="NomClub" ColumnName="NomClub" />
+          <ScalarProperty Name="ClubID" ColumnName="ClubID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Comp_Club">
+      <EntityTypeMapping TypeName="PCMAModel.Comp_Club">
+        <MappingFragment StoreEntitySet="Comp_Club">
+          <ScalarProperty Name="MedecinID" ColumnName="MedecinID" />
+          <ScalarProperty Name="DateComp_Club" ColumnName="DateComp_Club" />
+          <ScalarProperty Name="CompetitionID" ColumnName="CompetitionID" />
+          <ScalarProperty Name="ClubID" ColumnName="ClubID" />
+          <ScalarProperty Name="Comp_ClubID" ColumnName="Comp_ClubID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Action">
+      <EntityTypeMapping TypeName="PCMAModel.Action">
+        <MappingFragment StoreEntitySet="Action">
+          <ScalarProperty Name="DossierID" ColumnName="DossierID" />
+          <ScalarProperty Name="TextAction" ColumnName="TextAction" />
+          <ScalarProperty Name="ResAction" ColumnName="ResAction" />
+          <ScalarProperty Name="CheckID" ColumnName="CheckID" />
+          <ScalarProperty Name="CategorieID" ColumnName="CategorieID" />
+          <ScalarProperty Name="ActionID" ColumnName="ActionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dossier">
+      <EntityTypeMapping TypeName="PCMAModel.Dossier">
+        <MappingFragment StoreEntitySet="Dossier">
+          <ScalarProperty Name="FileDossier" ColumnName="FileDossier" />
+          <ScalarProperty Name="DateDossier" ColumnName="DateDossier" />
+          <ScalarProperty Name="MedecinID" ColumnName="MedecinID" />
+          <ScalarProperty Name="ClubID" ColumnName="ClubID" />
+          <ScalarProperty Name="JoueurID" ColumnName="JoueurID" />
+          <ScalarProperty Name="DossierID" ColumnName="DossierID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categorie">
+      <EntityTypeMapping TypeName="PCMAModel.Categorie">
+        <MappingFragment StoreEntitySet="Categorie">
+          <ScalarProperty Name="TabsID" ColumnName="TabsID" />
+          <ScalarProperty Name="TextCategorie" ColumnName="TextCategorie" />
+          <ScalarProperty Name="CategorieID" ColumnName="CategorieID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Controle">
+      <EntityTypeMapping TypeName="PCMAModel.Controle">
+        <MappingFragment StoreEntitySet="Controle">
+          <ScalarProperty Name="CategorieID" ColumnName="CategorieID" />
+          <ScalarProperty Name="TypeControle" ColumnName="TypeControle" />
+          <ScalarProperty Name="TextControle" ColumnName="TextControle" />
+          <ScalarProperty Name="ConroleID" ColumnName="ConroleID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Confirmation">
+      <EntityTypeMapping TypeName="PCMAModel.Confirmation">
+        <MappingFragment StoreEntitySet="Confirmation">
+          <ScalarProperty Name="DateConfirmation" ColumnName="DateConfirmation" />
+          <ScalarProperty Name="Confirmation1" ColumnName="Confirmation" />
+          <ScalarProperty Name="UtilisateurID" ColumnName="UtilisateurID" />
+          <ScalarProperty Name="DossierID" ColumnName="DossierID" />
+          <ScalarProperty Name="ConfirmationID" ColumnName="ConfirmationID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="File">
+      <EntityTypeMapping TypeName="PCMAModel.File">
+        <MappingFragment StoreEntitySet="File">
+          <ScalarProperty Name="DossierID" ColumnName="DossierID" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="FileID" ColumnName="FileID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

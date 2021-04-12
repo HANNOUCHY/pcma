@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e6bcf9e3c8e4412b8d207dfd7eed07a3" Name="Diagram1">
+        <EntityTypeShape EntityType="PCMAModel.Utilisateur" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCMAModel.Profil" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PCMAModel.Saison" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="PCMAModel.Competition" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PCMAModel.Joueur" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="PCMAModel.Club" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PCMAModel.Comp_Club" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="PCMAModel.Action" Width="1.5" PointX="6.75" PointY="3.75" />
+        <EntityTypeShape EntityType="PCMAModel.Dossier" Width="1.75" PointX="3.5" PointY="7.75" />
+        <EntityTypeShape EntityType="PCMAModel.Categorie" Width="1.5" PointX="7.375" PointY="6.75" />
+        <EntityTypeShape EntityType="PCMAModel.Controle" Width="1.5" PointX="9.375" PointY="0.75" />
+        <EntityTypeShape EntityType="PCMAModel.Confirmation" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="PCMAModel.File" Width="1.5" PointX="9.375" PointY="3.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,53 @@
+<mat-toolbar>
+  <span>Club</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
+</mat-toolbar>
+<form [formGroup]="service.form" class="normal-form" (submit)="onSubmit()">
+  <mat-grid-list cols="2" rowHeight="300px">
+    <mat-grid-tile>
+      <div class="controles-container">
+        
+        <input type="hidden" formControlName="ClubID">
+        <mat-form-field>
+          <input formControlName="NomClub" matInput placeholder="Club *">
+          <mat-error>This field is mandatory.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="EmailClub" matInput placeholder="Email *">
+          <mat-error>This field is mandatory.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="TelClub" matInput placeholder="Tel *">
+          <mat-error>This field is mandatory.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="CompetitionID"  placeholder="Competition">
+            <mat-option>None</mat-option>
+        <ng-container *ngFor="let lst of dataSourceCompetition.data" >
+              <mat-option [value]="lst.CompetitionID">{{lst.NomCompetition}}</mat-option>
+           
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="MedecinID"  placeholder="Medecin">
+            <mat-option>None</mat-option>
+        <ng-container *ngFor="let lst of dataSourceUtilisateur.data" >
+              <mat-option [value]="lst.UtilisateurID">{{lst.NomUtilisateur}}</mat-option>
+           
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div class="controles-container">
+        <div class="button-row">
+          <button mat-raised-button color="primary" type="submit" [disabled]="service.form.invalid">Submit</button>
+          <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>

@@ -1,0 +1,119 @@
+<!--<form #form="ngForm" (submit)="onSubmit(form)" autocomplete="off">
+  <input  type="hidden" name="UtilisateurID" #UtilisateurID="ngModel" [(ngModel)]="service.formData.UtilisateurID"  >
+ 
+  <div class="form-group">
+    <label for="">
+     Nom
+    </label>
+    <input name="NomUtilisateur" #NomUtilisateur="ngModel" [(ngModel)]="service.formData.NomUtilisateur" class="form-control" required>
+  <div class="validation-error" *ngIf="NomUtilisateur.invalid && NomUtilisateur.touched" >
+    This field in valide
+  </div>
+  </div>
+  <div class="form-group">
+    <label for="">
+      Prenom
+    </label>
+    <input name="PrenomUtilisateur" #PrenomUtilisateur="ngModel" [(ngModel)]="service.formData.PrenomUtilisateur" class="form-control">
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label >
+        Mot de passe
+      </label>
+      <input name="MdpUtilisateur" #MdpUtilisateur="ngModel" [(ngModel)]="service.formData.MdpUtilisateur" class="form-control">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="">
+        Email
+      </label>
+      <input  type="email"  ngModel email="true" name="EmailUtilisateur" #EmailUtilisateur="ngModel" [(ngModel)]="service.formData.EmailUtilisateur" class="form-control">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="">
+        GSM 
+      </label>
+      <input  ngModel ng-model="phoneVal" name="GsmUtilisateur" #GsmUtilisateur="ngModel" [(ngModel)]="service.formData.GsmUtilisateur" class="form-control">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="">
+        Profil 
+      </label>
+       <select name="ProfilUtilisateur" #ProfilUtilisateur="ngModel" [(ngModel)]="service.formData.ProfilUtilisateur" class="form-control">
+      <option value="1">test 1</option>
+      <option value="2">test 2</option>
+      <option value="3">test 3</option>
+      <option value="4">test 4</option>
+    </select>
+    </div>
+  </div> 
+  <div class="form-group">
+      <button type="submit" [disabled]="form.invalid" class="btn btn-dark">
+          <i class="fa fa-database"></i>
+        Submit
+      </button>
+      <button  class="btn btn-outline-dark ml-1" [mat-dialog-close]>
+        <i class="fa fa-close"></i>
+        Annuler
+      </button>
+    </div>
+</form>-->
+
+<mat-toolbar>
+    <span>Utilisateur</span>
+    <span class="fill-remaining-space"></span>
+    <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
+  </mat-toolbar>
+<form [formGroup]="service.form" class="normal-form" (submit)="onSubmit()">
+    <mat-grid-list cols="2" rowHeight="300px">
+      <mat-grid-tile>
+        <div class="controles-container">
+          
+          <input type="hidden" formControlName="UtilisateurID">
+          <mat-form-field>
+            <input formControlName="NomUtilisateur" matInput placeholder="Nom *">
+            <mat-error>This field is mandatory.</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+              <input formControlName="PrenomUtilisateur" matInput placeholder="Prenom *">
+              <mat-error>This field is mandatory.</mat-error>
+            </mat-form-field>
+         
+          <mat-form-field>
+            <input formControlName="GsmUtilisateur" matInput placeholder="Gsm *">
+            <mat-error *ngIf="service.form.controls['GsmUtilisateur'].errors?.required">This field is mandatory.</mat-error>
+            <mat-error *ngIf="service.form.controls['GsmUtilisateur'].errors?.minlength">Minimum 8 charactors needed.</mat-error>
+          </mat-form-field>
+         
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div class="controles-container">
+            <mat-form-field>
+                <input formControlName="EmailUtilisateur" matInput placeholder="Email">
+                <mat-error>Invalid email address.</mat-error>
+              </mat-form-field>
+              
+            <mat-form-field>
+                <input formControlName="MdpUtilisateur" type="password"  matInput placeholder="Mot de passe *">
+                <mat-error>This field is mandatory.</mat-error>
+              </mat-form-field>
+             
+          <mat-form-field>
+            <mat-select formControlName="ProfilUtilisateur"  placeholder="Profil">
+              <mat-option>None</mat-option>
+              <ng-container *ngFor="let lst of dataSourceProfil.data" >
+                <mat-option [value]="lst.ProfilID">{{lst.NomProfil}}</mat-option>
+             
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+         
+          <div class="button-row">
+            <button mat-raised-button color="primary" type="submit" [disabled]="service.form.invalid">Submit</button>
+            <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+          </div>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>

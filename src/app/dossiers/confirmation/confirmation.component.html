@@ -1,0 +1,34 @@
+<mat-toolbar>
+  <span>Dossier</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
+</mat-toolbar>
+<form [formGroup]="service.form" class="normal-form" (submit)="onSubmit()">
+  <mat-grid-list cols="2" rowHeight="300px">
+    <mat-grid-tile>
+      <div class="controles-container">
+        
+        <input type="hidden" formControlName="DossierID">
+        <mat-form-field>
+          <mat-label>Confirmation</mat-label>
+          <mat-select [(value)]="selected" formControlName="Confirmation1">
+            
+            <mat-option value="Valider">Valider</mat-option>
+            <mat-option value="Refuser">Refuser</mat-option>
+       
+          </mat-select>
+        </mat-form-field>
+       
+       
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div class="controles-container">
+        <div class="button-row">
+          <button mat-raised-button color="primary" type="submit" [disabled]="service.form.invalid">Submit</button>
+          <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>

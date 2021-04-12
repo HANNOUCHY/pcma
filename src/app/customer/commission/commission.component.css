@@ -1,0 +1,69 @@
+.mat-title-1{
+    color: #FFF !important;
+    font-weight: bold !important;
+    font-family: sans-serif !important;
+}
+.mat-description-1{
+    color: #FFF !important;
+    font-weight: bold !important;
+    font-family: sans-serif !important;
+    flex: 0.2;
+}
+.mat-title{
+    color: #FFF !important;
+    font-weight: bold !important;
+    font-family: sans-serif !important;
+    background-color: #8ec640 !important; 
+}
+.AmountUnavailable{
+    color: crimson !important; 
+}
+.AmountAvailable{
+    color:#8ec640 !important; 
+}
+.block-print{
+       width: 363px;
+    height: 64px;
+    border: 1px solid #ccc;
+    border-radius: 8px; 
+}
+.icon-print{
+    width: 22px;
+    float: left;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+.title-block-print{
+    width: 240px;
+    float: left;
+    font-size: 13px;
+    padding-top: 11px;
+    font-style: unset;
+    text-align: inherit;
+    padding-right: 11px;
+    padding-left: 7px;
+    font-weight: 600;
+}
+.btn-print{
+    background-color: #222165;
+    color: #FFF;
+    width: 83px;
+    float: left;
+    margin-top: 13px;
+    margin-right: 5px;
+    font-size: 13px;
+    height: 34px;  
+}
+.title-block{
+    width: 240px;
+    float: left;
+    font-size: 13px;
+    padding-top: 11px;
+    font-style: unset;
+    text-align: inherit;
+    padding-right: 11px;
+    padding-left: 7px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 3;
+}

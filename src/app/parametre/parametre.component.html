@@ -1,0 +1,68 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav 
+  class="sidenav" 
+  fixedInViewport="true"
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="!(isHandset$ | async)">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+        <button style="margin-top: 15px;text-align: left;"  mat-button  class="mat-btn"  (click)="Navigate('/home/dashboard')"  ><mat-icon>home</mat-icon>Tableau de bord</button>
+       
+        <button *ngIf="Pnavigate('dossier')" style="margin-top: 15px;text-align: left;"  mat-button  class="mat-btn" [matMenuTriggerFor]="dossier" ><mat-icon>folder</mat-icon>Dossier PCMA <mat-icon>keyboard_arrow_right</mat-icon></button>
+        
+      
+<button *ngIf="Pnavigate('donnee')" style="margin-top: 15px;text-align: left;" mat-button class="mat-btn" [matMenuTriggerFor]="donnee"><mat-icon>storage</mat-icon> Données <mat-icon>keyboard_arrow_right</mat-icon></button>
+<button *ngIf="Pnavigate('rapport')" style="margin-top: 15px;text-align: left;"  mat-button class="mat-btn"  [matMenuTriggerFor]="Rapport"><mat-icon>poll</mat-icon>  Rapport <mat-icon>keyboard_arrow_right</mat-icon></button>
+<button *ngIf="Pnavigate('parametre')" style="margin-top: 15px;text-align: left;"  mat-button class="mat-btn" [matMenuTriggerFor]="Parametre"><mat-icon>settings</mat-icon> Paramétre <mat-icon>keyboard_arrow_right</mat-icon></button>
+<button style="margin-top: 15px;text-align: left;"  mat-button class="mat-btn" [matMenuTriggerFor]="Profil"><mat-icon>account_box</mat-icon> Profil <mat-icon>keyboard_arrow_right</mat-icon></button>
+<mat-menu #dossier="matMenu" >
+    <button *ngIf="Pnavigate('listd')" mat-menu-item (click)="Navigate('/home/dossier-list')"   >Dossiers</button>
+    <button *ngIf="Pnavigate('envoyer')" mat-menu-item (click)="Navigate('/home/dossier')"   > <mat-icon>send</mat-icon> Envoyer</button>
+   
+    
+  </mat-menu>        
+
+<mat-menu #donnee="matMenu" >
+ 
+          <button *ngIf="Pnavigate('club')"  mat-menu-item (click)="Navigate('/home/club')"  >Clubs</button>
+          <button *ngIf="Pnavigate('joueur')" mat-menu-item (click)="Navigate('/home/joueur')" >Joueurs</button>
+          <button *ngIf="Pnavigate('saison')" mat-menu-item (click)="Navigate('/home/saison')" >Saison</button>
+          <button *ngIf="Pnavigate('competition')" mat-menu-item (click)="Navigate('/home/competition')" >Competition</button>
+          
+        </mat-menu>
+        <mat-menu #Rapport="matMenu" >
+            <button *ngIf="Pnavigate('rpcma')" mat-menu-item  >Dossier PCMA</button>
+            <button *ngIf="Pnavigate('rjoueurs')" mat-menu-item >Joueurs</button>
+            <button *ngIf="Pnavigate('rMedecin')" mat-menu-item >Medecin</button>           
+          </mat-menu>
+        <mat-menu #Parametre="matMenu" >
+            <button *ngIf="Pnavigate('utilisateur')" mat-menu-item (click)="Navigate('/home/utilisateur-list')" >Utilisateurs</button>
+            <button *ngIf="Pnavigate('profil')" mat-menu-item (click)="Navigate('/home/profil')"  >Profil</button>
+            <button *ngIf="Pnavigate('droit')" mat-menu-item >Droit</button> 
+          </mat-menu>
+          <mat-menu #Profil="matMenu" > 
+              <button mat-menu-item >Changer Mot de Passe</button>
+              <button mat-menu-item  (click)="Logout()">Se Déconnecter </button>
+             
+            </mat-menu> 
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Dossier PCMA</span>
+      <span class="spacer"></span>
+     
+      <a href="#"><mat-icon>settings</mat-icon></a>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

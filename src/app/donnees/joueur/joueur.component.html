@@ -1,0 +1,84 @@
+
+<mat-toolbar>
+  <span>Joueur</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
+</mat-toolbar>
+<form [formGroup]="service.form" class="normal-form" (submit)="onSubmit()">
+  <mat-grid-list cols="2" rowHeight="400px">
+    <mat-grid-tile>
+      <div class="controles-container">
+        
+        <input type="hidden" formControlName="JoueurID">
+        <mat-form-field>
+          <input formControlName="NomJoueur" matInput placeholder="Nom *">
+          <mat-error>This field is mandatory.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input formControlName="PrenomJoueur" matInput placeholder="Prenom *">
+            <mat-error>This field is mandatory.</mat-error>
+          </mat-form-field>
+       
+        <mat-form-field>
+          <input formControlName="GsmJoueur" matInput placeholder="Gsm *">
+          <mat-error *ngIf="service.form.controls['GsmJoueur'].errors?.required">This field is mandatory.</mat-error>
+          <mat-error *ngIf="service.form.controls['GsmJoueur'].errors?.minlength">Minimum 8 charactors needed.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="ClubID"  placeholder="Club">
+            <mat-option>None</mat-option>
+            <ng-container *ngFor="let lst of dataSourceClub.data" >
+              <mat-option [value]="lst.ClubID">{{lst.NomClub}}</mat-option>
+           
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div class="controles-container">
+          <mat-form-field>
+              <input formControlName="EmailJoueur" matInput placeholder="Email">
+              <mat-error>Invalid email address.</mat-error>
+            </mat-form-field>
+            
+            <mat-form-field>
+              <mat-select formControlName="PosteJoueur" placeholder="Poste ">
+                <mat-option>None</mat-option>
+                <ng-container >
+                    <mat-option value="Gardien de but">Gardien de but</mat-option>
+                    <mat-option value="Défenseur">Défenseur</mat-option>
+                    <mat-option value="Milieu">Milieu  </mat-option>
+                    <mat-option value="Attaquant">Attaquant </mat-option>
+                </ng-container>
+              </mat-select>
+            </mat-form-field>
+           
+        <mat-form-field>
+          <mat-select formControlName="LateralisationJoueur" placeholder="Lateralisation ">
+            <mat-option>None</mat-option>
+            <ng-container >
+              <mat-option value="Les 2 pieds">Les 2 pieds</mat-option>
+              <mat-option value="Droitier">Droitier</mat-option>
+              <mat-option value="Gaucher">Gaucher </mat-option>
+            
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" formControlName="DatenJoueur" placeholder="Date de N.">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+            <input formControlName="PhotoJoueur" matInput placeholder="Photo *">
+            <mat-error>This field is mandatory.</mat-error>
+          </mat-form-field>
+        <div class="button-row">
+          <button mat-raised-button color="primary" type="submit" [disabled]="service.form.invalid">Submit</button>
+          <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>

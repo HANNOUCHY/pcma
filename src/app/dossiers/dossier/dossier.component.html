@@ -1,0 +1,1633 @@
+<button mat-raised-button (click)="isOptional = !isOptional">
+    {{!isOptional ? 'Enable optional steps' : 'Disable optional steps'}}
+  </button>
+  
+  <mat-horizontal-stepper linear #stepper>
+    <mat-step [stepControl]="firstFormGroup" >
+      <form [formGroup]="firstFormGroup"  >
+          <mat-grid-list cols="1" >
+                
+        <ng-template matStepLabel>JOUEUR</ng-template>
+        <mat-form-field>
+            <mat-select  formControlName="JoueurID"  placeholder="Joueur" style="float:left;">
+              <mat-option>None</mat-option>
+          
+                <mat-option (click)="changejoueur(lst)"   *ngFor="let lst of dataSourceJoueur.data" [value]="lst.JoueurID">{{lst.PrenomJoueur}} {{lst.NomJoueur}}</mat-option>
+             
+             
+            </mat-select>
+           
+          </mat-form-field>
+         <mat-list  *ngFor="let item of formdatajoueur" style="width:100%; ">
+          <img  style="float:right;margin-right:100px; border: 1px solid #ccc;width: 147px;margin-top: 45px;" src="{{item.PhotoJoueur}}"  />
+            <mat-list-item>Nom Prenom : <b style="padding:10px;">{{item.PrenomJoueur}} {{item.NomJoueur}}</b> </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>Date de naissance: <b style="padding:10px;">{{item.DatenJoueur}}</b> </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>Club : <b style="padding:10px;"> {{item.NomClub}}</b></mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>Poste : <b style="padding:10px;">{{item.PosteJoueur}}</b> </mat-list-item>
+            
+            <mat-divider></mat-divider>
+            <mat-list-item>Latéralisation :<b style="padding:10px;">{{item.LateralisationJoueur}}</b> </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>Nombre de matches disputés ces 12 derniers mois :  
+              <ng-container   >
+                <mat-form-field>
+                    <input type="number" formControlName="AutreCtrl_12"   name="atrctrl"  matInput placeholder=""  (change)="updateChkbxArray(12,'12 derniers mois','text',$event.target.value)" >
+                    <mat-error>This field is mandatory.</mat-error>
+               </mat-form-field>
+            
+
+             </ng-container></mat-list-item>
+             
+          </mat-list>
+        
+      </mat-grid-list>
+    
+     
+        <div>
+          <button mat-button matStepperNext>Suivant</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" >
+        
+      <form [formGroup]="secondFormGroup" (submit)="onSubmit()">
+        <mat-grid-list cols="1" >
+        <ng-template matStepLabel>ANTECEDENTS MEDICAUX</ng-template>         
+         <u>2.	ANTECEDENTS MEDICAUX :</u> <br/>
+<i>2.1  PATHOLOGIES ACTUELLES ET PASSEES</i><br/>
+        <mat-form-field style="display:block" >
+           
+            <input matInput disabled >
+            <table style="width:100%" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="categorie">
+                  <th mat-header-cell *matHeaderCellDef> Général</th>
+                  <td mat-cell *matCellDef="let element"> {{element.TextCategorie}} </td>
+                </ng-container>
+              
+                <ng-container matColumnDef="champs">
+                    <th mat-header-cell *matHeaderCellDef> 
+                      
+                          </th>
+                    <td mat-cell *matCellDef="let element" > 
+                        <ng-container *ngFor="let lst of dataSource13; let i = index"  >
+                            <ng-container  >
+                            <mat-checkbox formControlName="secondCtrl"  [checked]="checked(element.CategorieID,lst.id_categorie)" (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')"  style="width: 33%;float: left;"      >{{lst.categorie}}</mat-checkbox>
+                         </ng-container>
+                       
+                        </ng-container> 
+                          </td>
+                  </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+              </table>
+              <hr/>
+              <table style="width:100%" mat-table [dataSource]="dataSource1" class="mat-elevation-z8">
+            
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="categorie">
+                    <th mat-header-cell *matHeaderCellDef> Cœur et poumon</th>
+                    <td mat-cell *matCellDef="let element"> {{element.TextCategorie}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="champs">
+                      <th mat-header-cell *matHeaderCellDef> 
+                        
+                            </th>
+                      <td mat-cell *matCellDef="let element"> 
+                          <ng-container *ngFor="let lst of dataSource14" >
+                              <mat-checkbox   [checked]="checked(element.CategorieID,lst.id_categorie)"  style="width:auto;float: left;margin-left:10px" (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" value="{{lst.id_categorie}}"   >{{lst.categorie}}</mat-checkbox>
+                  
+                          </ng-container> 
+                            </td>
+                    </ng-container>
+                
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                </table>
+                <hr/>
+                <table style="width:100%" mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
+            
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="categorie">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element"> {{element.TextCategorie}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="champs">
+                      <th mat-header-cell *matHeaderCellDef> 
+               
+                            </th>
+                      <td mat-cell *matCellDef="let element"> 
+                          <ng-container *ngFor="let lst of dataSource13"  >
+                              <mat-checkbox [checked]="checked(element.CategorieID,lst.id_categorie)"  style="width: 33%;float: left;" (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" value="{{lst.id_categorie}}"   >{{lst.categorie}}</mat-checkbox>
+                  
+                          </ng-container> 
+                            </td>
+                    </ng-container>
+                
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                </table>
+              <hr/>
+              <br/><u>Appareil locomoteur</u><br/><br/>
+              <b>Blessures graves </b>conduisant à plus de quatre semaines de ralentissement ou d’arrêt :
+                      
+               <mat-radio-group>
+                            <mat-radio-button value="{{lst.categorie}}" [checked]="checkedradio(1119,lst.categorie)"  *ngFor="let lst of dataSource9"  (change)="updateChkbxArray(1119,1119,$event.value,'ts')"  >{{lst.categorie}}</mat-radio-button>
+                                                   
+                            
+                          </mat-radio-group>
+              <table style="width:100%" mat-table [dataSource]="dataSource15" class="mat-elevation-z8" *ngIf="Masquer(1119)">
+            
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="categorie">
+                    <th mat-header-cell *matHeaderCellDef> 
+                   
+                    </th>
+                    <td mat-cell *matCellDef="let element" style="width:50%"> {{element.TextCategorie}} </td>
+                  </ng-container>
+                
+                  <!-- Name Column -->
+                 
+                
+                 
+                
+                  <!-- Symbol Column -->
+                  <ng-container matColumnDef="champs">
+                    <th mat-header-cell *matHeaderCellDef>
+                       
+                         </th>
+                    <td mat-cell *matCellDef="let element">
+                        <ng-container *ngFor="let lst of dataSource3"  >
+                            <ng-container  *ngIf="lst.categorie!='autre'" >
+                            <mat-checkbox [checked]="checked(element.CategorieID,lst.id_categorie)"  style="float: left;width: 100%;height:55px;margin-top:5px" (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" value="{{lst.id_categorie}}"   >{{lst.categorie}}</mat-checkbox>
+                          </ng-container>
+                            <ng-container  *ngIf="lst.categorie=='autre'" >
+                                <mat-form-field>
+                                    <input formControlName="AutreCtrl_{{element.CategorieID}}"   matInput placeholder="Autre  *"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,'text',$event.target.value)" >
+                                    <mat-error>This field is mandatory.</mat-error>
+                               </mat-form-field>
+                             </ng-container> 
+                        </ng-container> 
+                        </td>
+                        </ng-container>
+                        <ng-container matColumnDef="champs2">
+                            <th mat-header-cell *matHeaderCellDef>
+                               
+                                 </th>
+                            <td mat-cell *matCellDef="let element">
+                                <ng-container *ngFor="let lst of dataSource3" >
+                                    <mat-form-field style="float: left;width: 100%" >
+                                        <input type="number" formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder="Quand ?"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,'text',$event.target.value)" >
+                                        <mat-error>This field is mandatory.</mat-error>
+                                   </mat-form-field>
+                                 </ng-container>
+                              </td>
+                               <label style="margin-top:10px">Pour « autre », merci de fournir le diagnostic </label> 
+                                </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+                </table>
+                <hr/>
+             
+              <b>Opérations sur l’appareil locomoteur :</b>
+              <mat-radio-group>
+                  <mat-radio-button value="{{lst.categorie}}" [checked]="checkedradio(2119,lst.categorie)"  *ngFor="let lst of dataSource9"  (change)="updateChkbxArray(2119,2119,$event.value,'ts')"  >{{lst.categorie}}</mat-radio-button>
+                                         
+                  
+                </mat-radio-group>
+              <table style="width:100%" mat-table [dataSource]="dataSource16" class="mat-elevation-z8" *ngIf="Masquer(2119)">
+            
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="categorie">
+                    <th mat-header-cell *matHeaderCellDef> 
+                        
+                    </th>
+                    <td mat-cell *matCellDef="let element" style="width:50%"> {{element.TextCategorie}} </td>
+                  </ng-container>
+                
+                  <!-- Name Column -->
+                 
+                
+  
+                  <!-- Symbol Column -->
+                  <ng-container matColumnDef="champs">
+                    <th mat-header-cell *matHeaderCellDef>
+                     
+                         </th>
+                    <td mat-cell *matCellDef="let element">
+                        <ng-container *ngFor="let lst of dataSource4"  >
+                            <ng-container  *ngIf="lst.categorie!='autre'" >
+                            <mat-checkbox [checked]="checked(element.CategorieID,lst.id_categorie)"  style="float: left;width: 100%;height:55px;margin-top:5px" (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" value="{{lst.id_categorie}}"    >{{lst.categorie}}</mat-checkbox>
+                          </ng-container>
+                            <ng-container  *ngIf="lst.categorie=='autre'" >
+                                <mat-form-field>
+                                    <input  formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder="Autre  *"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,'text',$event.target.value)" >
+                                    <mat-error>This field is mandatory.</mat-error>
+                               </mat-form-field>
+                             </ng-container>
+                        </ng-container> 
+                        </td>
+                        </ng-container>
+                        <ng-container matColumnDef="champs2">
+                            <th mat-header-cell *matHeaderCellDef>
+                               
+                                 </th>
+                            <td mat-cell *matCellDef="let element">
+                                <ng-container *ngFor="let lst of dataSource4" >
+                                    <mat-form-field style="float: left;width: 100%" >
+                                        <input type="number" formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder="Quand ?"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,'text',$event.target.value)" >
+                                        <mat-error>This field is mandatory.</mat-error>
+                                   </mat-form-field>
+                                 </ng-container>
+                                 </td>
+                               <label style="margin-top:10px">Pour « autre », merci de fournir le diagnostic </label> 
+                                </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+                </table>
+                <hr/>
+                <b>Gènes ou douleurs récurrentes : </b>
+                <mat-radio-group>
+                    <mat-radio-button value="{{lst.categorie}}" [checked]="checkedradio(3119,lst.categorie)"  *ngFor="let lst of dataSource9"  (change)="updateChkbxArray(3119,3119,$event.value,'ts')"  >{{lst.categorie}}</mat-radio-button>
+                                           
+                    
+                  </mat-radio-group>
+                <table style="width:100%" mat-table [dataSource]="dataSource5" class="mat-elevation-z8" *ngIf="Masquer(3119)">
+            
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="categorie">
+                      <th mat-header-cell *matHeaderCellDef>
+                          
+                      </th>
+                      <td mat-cell *matCellDef="let element" style="width:25%"> {{element.TextCategorie}} </td>
+                    </ng-container>
+                  
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="champs">
+                      <th mat-header-cell *matHeaderCellDef> 
+                         
+                            </th>
+                      <td mat-cell *matCellDef="let element"> 
+                          <ng-container *ngFor="let lst of dataSource10" >
+                              <mat-checkbox [checked]="checked(element.CategorieID,lst.id_categorie)"  style="width:25%;float: left;"   (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" value="{{lst.id_categorie}}" >{{lst.categorie}}</mat-checkbox>
+                  
+                          </ng-container> 
+                            </td>
+                    </ng-container>
+                  
+                    <!-- Weight Column -->
+                   
+                  
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                  </table>
+                 
+                  <hr/>
+                  <br/><u>Diagnostic et traitement :</u><br/><br/>
+                  <b>Diagnostic et traitement : </b>
+                  <mat-radio-group>
+                      <mat-radio-button value="{{lst.categorie}}" [checked]="checkedradio(4119,lst.categorie)"  *ngFor="let lst of dataSource9"  (change)="updateChkbxArray(4119,4119,$event.value,'ts')"  >{{lst.categorie}}</mat-radio-button>
+                                             
+                      
+                    </mat-radio-group>
+                    
+                    <table style="width:100%" mat-table [dataSource]="dataSource6" class="mat-elevation-z8" *ngIf="Masquer(4119)">
+       
+          <!-- Position Column -->
+          <ng-container matColumnDef="categorie">
+            <th mat-header-cell *matHeaderCellDef> 
+              Diagnostic et traitement :
+            </th>
+            <td mat-cell *matCellDef="let element" style="width:50%"> {{element.categorie}} </td>
+          </ng-container>
+        
+          <!-- Name Column -->
+
+          <ng-container matColumnDef="champs">
+            <th mat-header-cell *matHeaderCellDef>
+                
+                 </th>
+            <td mat-cell *matCellDef="let element">
+                 <ng-container  *ngIf="element.categorie!='Autre'" >
+                   <mat-radio-group *ngFor="let lst of dataSource177" >
+                       <mat-radio-button value="{{element.id_categorie}}" value="{{element.id_categorie}}" [checked]="checked(element.id_categorie,lst.id_categorie)"  (change)="updateChkbxArray(element.id_categorie,lst.id_categorie,$event.value,'rad')" >{{lst.categorie}}</mat-radio-button>
+                     
+                     </mat-radio-group>
+               </ng-container>
+               <ng-container  *ngIf="element.categorie=='Autre'" >
+                   <mat-form-field>
+                       <input  formControlName="AutreCtrl_{{element.id_categorie}}"    matInput placeholder="Autre  *"  (change)="updateChkbxArray(element.id_categorie,element.id_categorie,'text',$event.target.value)" >
+                       <mat-error>This field is mandatory.</mat-error>
+                  </mat-form-field>
+                </ng-container>
+
+            
+
+              
+               
+               
+               </td> 
+                </ng-container>
+              
+          <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+        </table>
+                  
+                    <hr/>
+                    
+                    <br/><u>ANTECEDENTS FAMILIAUX (PARENTS HOMMES DE MOINS DE 55 ANS, PARENTS FEMMES DE MOINS DE 65 ANS):</u><br/><br/>
+                    <table style="width:100%" mat-table [dataSource]="dataSource7" class="mat-elevation-z8">
+            
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="categorie">
+                          <th mat-header-cell *matHeaderCellDef></th>
+                          <td mat-cell *matCellDef="let element"> {{element.TextCategorie}} </td>
+                        </ng-container>
+                      
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="champs">
+                          <th mat-header-cell *matHeaderCellDef> 
+                            
+                                </th>
+                          <td mat-cell *matCellDef="let element"> 
+                              <ng-container *ngFor="let lst of dataSource12" >
+                                  <mat-checkbox [checked]="checked(element.CategorieID,lst.id_categorie)"  style="width: 20%;float: left;"   (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" value="{{lst.id_categorie}}">{{lst.categorie}}</mat-checkbox>
+                      
+                              </ng-container> 
+                             
+                                </td>
+                        </ng-container>
+                      
+                        <!-- Weight Column -->
+                       
+                      
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                      </table>
+                      <br/><u>PRESCRIPTION MEDICALE COURANTE DE CES 12 DERNIERS MOIS</u><br/><br/>
+                      <table style="width:100%" mat-table [dataSource]="dataSource8" class="mat-elevation-z8">
+            
+                          <!-- Position Column -->
+                          <ng-container matColumnDef="categorie">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let element"> {{element.TextCategorie}} </td>
+                          </ng-container>
+                        
+                          <!-- Name Column -->
+                          <ng-container matColumnDef="champs">
+                            <th mat-header-cell *matHeaderCellDef> 
+                              
+                                  </th>
+                            <td mat-cell *matCellDef="let element"> 
+                                <ng-container *ngFor="let lst of dataSource9" >
+                                    <mat-checkbox [checked]="checked(element.CategorieID,lst.id_categorie)"  style="width: 50%;float: left;"   (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" value="{{lst.id_categorie}}" >{{lst.categorie}}</mat-checkbox>
+                        
+                                </ng-container> 
+                                  </td>
+                          </ng-container>
+                        
+                          <!-- Weight Column -->
+                         
+                        
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                        </table>
+                </mat-form-field>
+                    
+                    <div>
+                      <button style="width:auto"  mat-button matStepperPrevious>Précédent</button>
+                      <button style="width:auto"  mat-button matStepperNext>Suivant</button>
+                    </div> </mat-grid-list>
+                  </form>
+               
+                </mat-step>
+<!--------------------------------------------------------------------------->
+<mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup" (submit)="onSubmit()">
+      <ng-template matStepLabel>EXAMEN PHYSIQUE GENERAL</ng-template>
+      <u>3 EXAMEN PHYSIQUE GENERAL</u> <br/>
+      <mat-form-field style="display:block" >
+          <input matInput disabled >
+              
+             
+
+         <table style="width:100%" mat-table [dataSource]="dataSource18" class="mat-elevation-z8">
+       
+             <!-- Position Column -->
+             <ng-container matColumnDef="categorie">
+               <th mat-header-cell *matHeaderCellDef> 
+                   EXAMEN PHYSIQUE GENERAL
+               </th>
+               <td mat-cell *matCellDef="let element" style="width:50%"> {{element.TextCategorie}} </td>
+             </ng-container>
+           
+             <!-- Name Column -->
+
+             <ng-container matColumnDef="champs">
+               <th mat-header-cell *matHeaderCellDef>
+                   
+                    </th>
+               <td mat-cell *matCellDef="let element">
+                  
+                  <ng-container  *ngIf="element.TextCategorie=='Taille'" >
+                      <mat-form-field>
+                          <input formControlName="AutreCtrl_{{element.CategorieID}}"     matInput placeholder="Taille  *"  (change)="updateChkbxArray(element.CategorieID,element.CategorieID,'text',$event.target.value)" >
+                          <mat-error>This field is mandatory.</mat-error>
+                     </mat-form-field>
+                   </ng-container>
+
+                   <ng-container  *ngIf="element.TextCategorie=='Poids'"  >
+                      <mat-form-field>
+                          <input   formControlName="AutreCtrl_{{element.CategorieID}}"    matInput placeholder="Poids  *" (change)="updateChkbxArray(element.CategorieID,element.CategorieID,'text',$event.target.value)" >
+                          <mat-error>This field is mandatory.</mat-error>
+                     </mat-form-field>
+                  </ng-container>
+
+                   <ng-container  *ngIf="element.TextCategorie!='Taille' && element.TextCategorie!='Poids'" >
+                      <mat-radio-group *ngFor="let lst of dataSource22" >
+                          <mat-radio-button value="{{element.CategorieID}}" [checked]="checked(element.CategorieID,lst.id_categorie)"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'Normal')" >{{element.TextCategorie}}</mat-radio-button>
+                        
+                        </mat-radio-group>
+                  </ng-container>
+                  
+                  
+                  </td> 
+                   </ng-container>
+                 
+             <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+             <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+           </table>
+           <hr/>
+<b>  Symptômes du syndrome de Marfan</b>
+           <mat-radio-group>
+              <mat-radio-button value="{{lst.categorie}}" [checked]="checkedradio(5119,lst.categorie)"  *ngFor="let lst of dataSource9"  (change)="updateChkbxArray(5119,5119,$event.value,'ts')"  >{{lst.categorie}}</mat-radio-button>
+                                     
+              
+            </mat-radio-group>
+           <table style="width:100%" mat-table [dataSource]="dataSource19" class="mat-elevation-z8" *ngIf="Masquer(5119)">
+
+              <!-- Position Column -->
+              <ng-container matColumnDef="categorie">
+                <th mat-header-cell *matHeaderCellDef>
+                  
+                </th>
+                <td mat-cell *matCellDef="let element" style="width:50%"> {{element.TextCategorie}} </td>
+              </ng-container>
+            
+              <!-- Name Column -->
+              <ng-container matColumnDef="champs">
+                <th mat-header-cell *matHeaderCellDef> 
+                   
+                      </th>
+                <td mat-cell *matCellDef="let element"> 
+                <ng-container *ngFor="let lst of dataSource20" >
+                    <ng-container  *ngIf="lst.categorie!='autre'" >  
+                  <mat-checkbox [checked]="checked(element.CategorieID,lst.id_categorie)"  style="width:100%;float: left;"   (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" value="{{lst.id_categorie}}" >{{lst.categorie}}</mat-checkbox>
+                </ng-container>
+                  <ng-container  *ngIf="lst.categorie=='autre'" >
+                      <mat-form-field>
+                          <input  formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder="Autre  *"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,'text',$event.target.value)" >
+                          <mat-error>This field is mandatory.</mat-error>
+                     </mat-form-field>
+                   </ng-container>
+                </ng-container> 
+                    </td>
+              </ng-container>
+            
+              <!-- Weight Column -->
+             
+            
+              <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+            </table>
+
+</mat-form-field>
+
+<div>
+<button style="width:auto"  mat-button matStepperPrevious>Précédent</button>
+<button style="width:auto"  mat-button matStepperNext>Suivant</button>
+</div>
+
+</form>
+</mat-step>
+
+<!-------------------------------------------->
+                <mat-step [stepControl]="secondFormGroup">
+                    <form [formGroup]="secondFormGroup" >
+                      <ng-template matStepLabel>SYSTEME CARDIOVASCULAIRE</ng-template>
+                      <u>4.	SYSTEME CARDIOVASCULAIRE</u> <br/>
+                      <mat-form-field style="display:block" >
+                          <input matInput disabled >
+                              
+                             
+              
+                         <table style="width:100%" mat-table [dataSource]="dataSource21" class="mat-elevation-z8">
+                       
+                             <!-- Position Column -->
+                             <ng-container matColumnDef="categorie">
+                               <th mat-header-cell *matHeaderCellDef> 
+                                  SYSTEME CARDIOVASCULAIRE
+                               </th>
+                               <td mat-cell *matCellDef="let element" style="width:50%"> {{element.TextCategorie}} </td>
+                             </ng-container>
+                           
+                             <!-- Name Column -->
+              
+                             <ng-container matColumnDef="champs">
+                               <th mat-header-cell *matHeaderCellDef>
+                                   
+                                    </th>
+                               <td mat-cell *matCellDef="let element">
+                                  <ng-container    >
+                                      <mat-radio-group  *ngIf="element.TextCategorie=='Rythme'"  >
+                                          <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)"  style="padding-right:20px" *ngFor="let lst of dataSource22"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                          </mat-radio-group>
+                                          <mat-radio-group style="padding-right:20px"  *ngIf="element.TextCategorie=='Son'"  >
+                                              <mat-radio-button value="{{lst.categorie}}" [checked]="checkedradio(element.CategorieID,lst.categorie)"  *ngFor="let lst of dataSource23"  (change)="updateChkbxArray(element.CategorieID,element.CategorieID,$event.value,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                              </mat-radio-group>
+                                              <mat-radio-group style="padding-right:20px" *ngIf="element.TextCategorie=='Veine jugulaire (position à 45°)'"  >
+                                                  <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)" *ngFor="let lst of dataSource23"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                                  </mat-radio-group>
+                                                  <mat-radio-group  style="padding-right:20px" *ngIf="element.TextCategorie=='Souffle'"  >
+                                                      <mat-radio-button value="{{lst.categorie}}" [checked]="checkedradio(element.CategorieID,lst.categorie)"  *ngFor="let lst of dataSource9"  (change)="updateChkbxArray(element.CategorieID,element.CategorieID,$event.value,'ts')"  >{{lst.categorie}}</mat-radio-button>
+                                                      </mat-radio-group>
+                                                      <mat-radio-group  style="padding-right:20px" *ngIf="element.TextCategorie=='Œdème périphérique' || element.TextCategorie=='Reflux hépato-jugulaire'"  >
+                                                          <mat-radio-button value="{{lst.categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)"  *ngFor="let lst of dataSource9"  (change)="updateChkbxArray(element.CategorieID,element.id_categorie,$event.value,'ts')"  >{{lst.categorie}}</mat-radio-button>
+                                                          </mat-radio-group>
+                                  </ng-container>
+                                 
+                                      
+                                          <ng-container *ngIf="element.TextCategorie=='Son'"  >
+                                              <ng-container *ngIf="Masquer(element.CategorieID)" >
+                                            précisez :  
+                                              <mat-checkbox *ngFor="let lst of dataSource61" [checked]="checked(element.CategorieID,lst.id_categorie)"  style="margin-right:5px" (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" value="{{lst.id_categorie}}"    >{{lst.categorie}}</mat-checkbox>
+                                     </ng-container>       </ng-container>
+                                  
+                             
+
+                                            <ng-container  *ngIf="element.TextCategorie=='Souffle'"   >
+                                                <ng-container *ngIf="Masquer(element.CategorieID)" >
+                                                précisez :  
+                                                  <mat-checkbox *ngFor="let lst of dataSource62" [checked]="checked(element.CategorieID,lst.id_categorie)"  style="margin-right:5px" (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" value="{{lst.id_categorie}}"    >{{lst.categorie}}</mat-checkbox>
+                                                </ng-container>
+</ng-container>
+                                   
+                                  
+                                  
+                                  </td> 
+                                   </ng-container>
+                                 
+                             <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                             <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                           </table>
+                           
+
+                          <hr/>
+
+                           <table style="width:100%" mat-table [dataSource]="dataSource25" class="mat-elevation-z8">
+                       
+                              <!-- Position Column -->
+                              <ng-container matColumnDef="categorie">
+                                <th mat-header-cell *matHeaderCellDef> 
+                                    Vaisseaux sanguins
+                                </th>
+                                <td mat-cell *matCellDef="let element" style="width:50%"> {{element.TextCategorie}} </td>
+                              </ng-container>
+                            
+                              <!-- Name Column -->
+               
+                              <ng-container matColumnDef="champs">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    
+                                     </th>
+                                <td mat-cell *matCellDef="let element">
+                                   <ng-container    >
+                                       <mat-radio-group  *ngIf="element.TextCategorie=='Pouls périphérique'"  >
+                                           <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)" *ngFor="let lst of dataSource24"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                           </mat-radio-group>
+                                         
+                                                   <mat-radio-group  *ngIf="element.TextCategorie=='Bruits vasculaires' || element.TextCategorie=='Varices'"  >
+                                                       <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)" *ngFor="let lst of dataSource9"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                                       </mat-radio-group>
+                                   </ng-container>
+                                   
+ 
+                                  
+ 
+                                    
+                                   
+                                   
+                                   </td> 
+                                    </ng-container>
+                                  
+                              <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                              <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                            </table>
+
+                          <hr/>
+                            <table style="width:100%" mat-table [dataSource]="dataSource26" class="mat-elevation-z8">
+                       
+                                <!-- Position Column -->
+                                <ng-container matColumnDef="categorie">
+                                  <th mat-header-cell *matHeaderCellDef> 
+                                      Pouls après 5 minutes de repos
+                                  </th>
+                                  <td mat-cell *matCellDef="let element" style="width:50%"> {{element.TextCategorie}} </td>
+                                </ng-container>
+                              
+                                <!-- Name Column -->
+                 
+                                <ng-container matColumnDef="champs">
+                                  <th mat-header-cell *matHeaderCellDef>
+                                      
+                                       </th>
+                                  <td mat-cell *matCellDef="let element">
+                                     <ng-container    >
+                                        <mat-form-field>
+                                            <input  formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder="______ /min" (change)="updateChkbxArray(element.CategorieID,element.CategorieID,'text',$event.target.value)" >
+                                            <mat-error>This field is mandatory.</mat-error>
+                                       </mat-form-field>
+                                     </ng-container>
+                        
+                                     
+                                     </td> 
+                                      </ng-container>
+                                    
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                              </table>
+                            <hr/>
+                            <table style="width:100%" mat-table [dataSource]="dataSource27" class="mat-elevation-z8">
+                       
+                                <!-- Position Column -->
+                                <ng-container matColumnDef="categorie">
+                                  <th mat-header-cell *matHeaderCellDef> 
+                                      Pression artérielle en position allongée sur le dos après 5 minutes de repos
+                                  </th>
+                                  <td mat-cell *matCellDef="let element" style="width:50%"> 
+                                    {{element.TextCategorie}} </td>
+                                </ng-container>
+                              
+                                <!-- Name Column -->
+                 
+                                <ng-container matColumnDef="champs">
+                                  <th mat-header-cell *matHeaderCellDef>
+                                      
+                                       </th>
+                                  <td mat-cell *matCellDef="let element">
+                                     <ng-container    >
+                                        <mat-form-field >
+                                            <input  formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder="___ / ___ mmHg" (change)="updateChkbxArray(element.CategorieID,element.CategorieID,'text',$event.target.value)" >
+                                            <mat-error>This field is mandatory.</mat-error>
+                                       </mat-form-field>
+                                     </ng-container>
+                        
+                                     
+                                     </td> 
+                                      </ng-container>
+                                    
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                              </table>
+
+                              <hr/>
+                              <u>4.1  ECG 12 ELECTRODES* EN POSITION ALLONGEE SUR LE DOS APRES 5 MINUTES DE REPOS</u> <br/>
+         
+                            <br/>
+                            <b>  Rythme/conduction</b>
+                            <mat-radio-group>
+                                <mat-radio-button value="{{lst.categorie}}" [checked]="checkedradio(6119,lst.categorie)"  *ngFor="let lst of dataSource23"  (change)="updateChkbxArray(6119,6119,$event.value,'ts')"  >{{lst.categorie}}</mat-radio-button>
+                                                       
+                                
+                              </mat-radio-group>
+                              <table style="width:100%" mat-table [dataSource]="dataSource29" class="mat-elevation-z8" *ngIf="Masquer(6119)">
+                         
+                                  <!-- Position Column -->
+                                  <ng-container matColumnDef="categorie">
+                                    <th mat-header-cell *matHeaderCellDef> 
+                                      
+                                    </th>
+                                    <td mat-cell *matCellDef="let element" style="width:50%"> 
+                                      {{element.TextCategorie}} </td>
+                                  </ng-container>
+                                
+                                  <!-- Name Column -->
+                   
+                                  <ng-container matColumnDef="champs">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                       
+                                         </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <ng-container *ngFor="let lst of dataSource28"  >
+                                            <ng-container  *ngIf="lst.categorie!='bloc atrio-ventriculaire'" >
+                                        <mat-checkbox [checked]="checked(element.CategorieID,lst.id_categorie)"  style="float: left;width: 100%;height:55px;margin-top:5px" (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')"   >{{lst.categorie}}</mat-checkbox>
+                                          </ng-container>
+                                          
+                                            <ng-container  *ngIf="lst.categorie=='bloc atrio-ventriculaire'" >
+                                                précisez :  
+                                                <mat-checkbox *ngFor="let lst of dataSource63" [checked]="checked(element.CategorieID,lst.id_categorie)"  style="margin-right:5px" (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" value="{{lst.id_categorie}}"    >{{lst.categorie}}</mat-checkbox>
+                                          
+                                             </ng-container>
+                                        </ng-container> 
+                          
+                                       
+                                       </td> 
+                                        </ng-container>
+                                      
+                                  <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                                  <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                                </table>
+         <hr/>
+         <table style="width:100%" mat-table [dataSource]="dataSource30" class="mat-elevation-z8">
+                         
+            <!-- Position Column -->
+            <ng-container matColumnDef="categorie">
+              <th mat-header-cell *matHeaderCellDef> 
+                  Indices temporels
+              </th>
+              <td mat-cell *matCellDef="let element" style="width:50%"> 
+                {{element.TextCategorie}} </td>
+            </ng-container>
+          
+            <!-- Name Column -->
+
+            <ng-container matColumnDef="champs">
+              <th mat-header-cell *matHeaderCellDef>
+                  <mat-radio-group>
+                      </mat-radio-group>
+                   </th>
+              <td mat-cell *matCellDef="let element">
+                  <ng-container *ngFor="let lst of dataSource31"  >
+                      <ng-container   >
+                          <mat-form-field>
+                              <input   formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder="{{lst.categorie}}"  (change)="updateChkbxArray(element.CategorieID,element.CategorieID,'text',$event.target.value)" >
+                              <mat-error>This field is mandatory.</mat-error>
+                         </mat-form-field>
+                       </ng-container>
+                  </ng-container> 
+    
+                 
+                 </td> 
+                  </ng-container>
+                
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+          </table>
+         <hr/>
+           <U>Dépolarisation/complexe QRS</U><br/>
+           <b>  Dépolarisation/complexe QRS</b>
+           <mat-radio-group>
+              <mat-radio-button value="{{lst.categorie}}" [checked]="checkedradio(7119,lst.categorie)"  *ngFor="let lst of dataSource23"  (change)="updateChkbxArray(7119,7119,$event.value,'ts')"  >{{lst.categorie}}</mat-radio-button>
+                                     
+              
+            </mat-radio-group>
+
+         <table style="width:100%" mat-table [dataSource]="dataSource34" class="mat-elevation-z8" *ngIf="Masquer(7119)">
+                         
+            <!-- Position Column -->
+            <ng-container matColumnDef="categorie">
+              <th mat-header-cell *matHeaderCellDef> 
+                  Dépolarisation/complexe QRS
+              </th>
+              <td mat-cell *matCellDef="let element" style="width:50%"> 
+                {{element.TextCategorie}} </td>
+            </ng-container>
+          
+            <!-- Name Column -->
+
+            <ng-container matColumnDef="champs">
+              <th mat-header-cell *matHeaderCellDef>
+             
+                   </th>
+              <td mat-cell *matCellDef="let element">
+                  <ng-container *ngFor="let lst of dataSource32"  >
+                      <ng-container   >
+                      <mat-checkbox [checked]="checked(element.CategorieID,lst.id_categorie)"  style="float: left;width: 100%;height:55px;margin-top:5px" (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" value="{{lst.id_categorie}}"    >{{lst.categorie}}</mat-checkbox>
+                    </ng-container>
+              
+                  </ng-container> 
+    
+                 
+                 </td> 
+                  </ng-container>
+                
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+          </table>
+          <hr/>
+          <table style="width:100%" mat-table [dataSource]="dataSource33" class="mat-elevation-z8">
+                          
+             <!-- Position Column -->
+             <ng-container matColumnDef="categorie">
+               <th mat-header-cell *matHeaderCellDef> 
+                   Indices temporels
+               </th>
+               <td mat-cell *matCellDef="let element" style="width:50%"> 
+                 {{element.TextCategorie}} </td>
+             </ng-container>
+           
+             <!-- Name Column -->
+ 
+             <ng-container matColumnDef="champs">
+               <th mat-header-cell *matHeaderCellDef>
+                   <mat-radio-group>
+                       </mat-radio-group>
+                    </th>
+               <td mat-cell *matCellDef="let element">
+                 <mat-radio-group style="padding-right:20px"  *ngIf="element.TextCategorie!='Bloc de branche' && element.TextCategorie!='Hypertrophie du ventricule gauche'"     >
+                  <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)" value="{{lst.id_categorie}}" *ngFor="let lst of dataSource23"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                     
+                </mat-radio-group>
+                  <mat-radio-group  style="padding-right:20px" *ngIf="element.TextCategorie=='Bloc de branche'"  >
+                      <mat-radio-button value="{{lst.categorie}}" [checked]="checkedradio(element.CategorieID,lst.categorie)"  *ngFor="let lst of dataSource9"  (change)="updateChkbxArray(element.CategorieID,element.CategorieID,$event.value,'ts')" >{{lst.categorie}}</mat-radio-button>
+                      </mat-radio-group >
+                      <mat-radio-group  style="padding-right:20px" *ngIf="element.TextCategorie=='Hypertrophie du ventricule gauche'"  >
+                          <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)" value="{{lst.id_categorie}}" *ngFor="let lst of dataSource9"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                          </mat-radio-group >
+                      <ng-container   *ngIf="element.TextCategorie=='Bloc de branche' "  >
+                          <ng-container   *ngIf="Masquer(element.CategorieID)"  >
+                          précisez :  
+                          <mat-checkbox *ngFor="let lst of dataSource64" [checked]="checked(element.CategorieID,lst.id_categorie)"  style="margin-right:5px" (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" value="{{lst.id_categorie}}"    >{{lst.categorie}}</mat-checkbox>
+                        </ng-container>
+                      </ng-container>
+                    
+                  </td> 
+                   </ng-container>
+                 
+             <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+             <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+           </table>
+           <hr/>
+           Repolarisation (segment ST, ondes T, intervalle QT)
+           <mat-radio-group>
+              <mat-radio-button value="{{lst.categorie}}" [checked]="checkedradio(8119,lst.categorie)"  *ngFor="let lst of dataSource23"  (change)="updateChkbxArray(8119,8119,$event.value,'ts')"  >{{lst.categorie}}</mat-radio-button>
+                                     
+              
+            </mat-radio-group>
+
+         
+          
+          <table style="width:100%" mat-table [dataSource]="dataSource35" class="mat-elevation-z8" *ngIf="Masquer(8119)">
+                          
+             <!-- Position Column -->
+             <ng-container matColumnDef="categorie">
+               <th mat-header-cell *matHeaderCellDef> 
+                  Électrode
+               </th>
+               <td mat-cell *matCellDef="let element" style="width:50%"> 
+                 {{element.TextCategorie}} </td>
+             </ng-container>
+           
+             <!-- Name Column -->
+ 
+             <ng-container matColumnDef="champs">
+               <th mat-header-cell *matHeaderCellDef>
+                   <mat-radio-group>
+                       </mat-radio-group>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <ng-container *ngFor="let lst of dataSource36"  >
+                            <ng-container   >
+                            <mat-checkbox [checked]="checked(element.CategorieID,lst.id_categorie)"  style="float: left;width:8%;height:55px;margin-top:5px" (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')"    >{{lst.categorie}}</mat-checkbox>
+                          </ng-container>
+                    
+                        </ng-container> 
+          
+                       
+                       </td> 
+                   </ng-container>
+                 
+             <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+             <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+           </table>
+          <hr/>
+        <u>4.2  ÉCHOCARDIOGRAPHIE*</u>
+         
+            <table style="width:100%" mat-table [dataSource]="dataSource37" class="mat-elevation-z8">
+                       
+                <!-- Position Column -->
+                <ng-container matColumnDef="categorie">
+                  <th mat-header-cell *matHeaderCellDef> 
+                      Surface corporelle (BSA) : m2
+                  </th>
+                  <td mat-cell *matCellDef="let element" style="width:50%"> {{element.TextCategorie}} </td>
+                </ng-container>
+              
+                <!-- Name Column -->
+ 
+                <ng-container matColumnDef="champs">
+                  <th mat-header-cell *matHeaderCellDef>
+                      
+                       </th>
+                  <td mat-cell *matCellDef="let element">
+                     <ng-container>
+                       <mat-form-field style="width:60%">
+                             <input  formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder="_________m2"  (change)="updateChkbxArray(element.CategorieID,element.CategorieID,'text',$event.target.value)" >
+                             <mat-error>This field is mandatory.</mat-error>
+                        </mat-form-field>
+                      </ng-container>
+  </td> 
+                      </ng-container>
+                    
+                <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+              </table>
+
+<hr/>
+             
+                <br/>
+                <table style="width:100%" mat-table [dataSource]="dataSource38" class="mat-elevation-z8">
+                             
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="categorie">
+                      <th mat-header-cell *matHeaderCellDef> 
+                          Ventricule gauche
+                      </th>
+                      <td mat-cell *matCellDef="let element" style="width:50%"> {{element.TextCategorie}} </td>
+                    </ng-container>
+                  
+                    <!-- Name Column -->
+      
+                    <ng-container matColumnDef="champs">
+                      <th mat-header-cell *matHeaderCellDef>
+                          
+                           </th>
+                      <td mat-cell *matCellDef="let element">
+                         <ng-container    >
+                             <mat-radio-group  *ngIf="element.TextCategorie=='Mouvement régional de la paroi'"  >
+                                 <mat-radio-button value="{{element.CategorieID}}" [checked]="checked(element.CategorieID,lst.id_categorie)" style="padding-right:20px" *ngFor="let lst of dataSource23"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                 </mat-radio-group>
+                                
+                         </ng-container>
+                         <ng-container  *ngIf="element.TextCategorie!='Mouvement régional de la paroi' && element.TextCategorie!='Fonction diastolique'"  >
+                             <mat-form-field style="width:60%">
+                                 <input  formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder="{{element.unite}}"  (change)="updateChkbxArray(element.CategorieID,element.CategorieID,'text',$event.target.value)"  >
+                                 <mat-error>This field is mandatory.</mat-error>
+                            </mat-form-field>
+                          </ng-container>
+      
+                          <ng-container  *ngIf="element.TextCategorie=='Fonction diastolique'"  >
+                             <mat-form-field style="width:60%" *ngFor="let lst of dataSource39" >
+                                 <input  formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder="{{element.unite}}" (change)="updateChkbxArray(element.CategorieID,element.CategorieID,'text',$event.target.value)" >
+                                 <mat-error>This field is mandatory.</mat-error>
+                            </mat-form-field>
+                         </ng-container>
+      
+                          
+                         
+                         
+                         </td> 
+                          </ng-container>
+                        
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                  </table>
+                  <hr/>
+                  <table style="width:100%" mat-table [dataSource]="dataSource40" class="mat-elevation-z8">
+                       
+                      <!-- Position Column -->
+                      <ng-container matColumnDef="categorie">
+                        <th mat-header-cell *matHeaderCellDef> 
+                            Oreillette gauche
+                        </th>
+                        <td mat-cell *matCellDef="let element" style="width:50%"> {{element.TextCategorie}} </td>
+                      </ng-container>
+                    
+                      <!-- Name Column -->
+       
+                      <ng-container matColumnDef="champs">
+                        <th mat-header-cell *matHeaderCellDef>
+                            
+                             </th>
+                        <td mat-cell *matCellDef="let element">
+                           <ng-container>
+                             <mat-form-field style="width:60%">
+                                   <input  formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder="_________m2"  (change)="updateChkbxArray(element.CategorieID,element.CategorieID,'text',$event.target.value)" >
+                                   <mat-error>This field is mandatory.</mat-error>
+                              </mat-form-field>
+                            </ng-container>
+        </td> 
+                            </ng-container>
+                          
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                    </table>
+                    <hr/>
+                    <table style="width:100%" mat-table [dataSource]="dataSource41" class="mat-elevation-z8">
+                         
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="categorie">
+                          <th mat-header-cell *matHeaderCellDef> 
+                              Oreillette droite/veine cave inférieure 
+                          </th>
+                          <td mat-cell *matCellDef="let element" style="width:50%"> {{element.TextCategorie}} </td>
+                        </ng-container>
+                      
+                        <!-- Name Column -->
+         
+                        <ng-container matColumnDef="champs">
+                          <th mat-header-cell *matHeaderCellDef>
+                              
+                               </th>
+                               <td mat-cell *matCellDef="let element">
+                                  <ng-container    >
+                                      <mat-radio-group  *ngIf="element.TextCategorie=='Variabilité respiratoire du diamètre de la veine cave inférieure'"  >
+                                          <mat-radio-button value="{{element.CategorieID}}" [checked]="checked(element.CategorieID,lst.id_categorie)" style="padding-right:20px" *ngFor="let lst of dataSource42"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                          </mat-radio-group>
+                                         
+                                  </ng-container>
+                                  <ng-container  *ngIf="element.TextCategorie!='Variabilité respiratoire du diamètre de la veine cave inférieure'"  >
+                                      <mat-form-field style="width:60%">
+                                          <input  formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder="  "  (change)="updateChkbxArray(element.CategorieID,element.CategorieID,'text',$event.target.value)" >
+                                          <mat-error>This field is mandatory.</mat-error>
+                                     </mat-form-field>
+                                   </ng-container>
+          </td> 
+                              </ng-container>
+                            
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                      </table>
+
+                      <hr/>
+                      <table style="width:100%" mat-table [dataSource]="dataSource43" class="mat-elevation-z8">
+                           
+                          <!-- Position Column -->
+                          <ng-container matColumnDef="categorie">
+                            <th mat-header-cell *matHeaderCellDef> 
+                                Ventricule droit
+                            </th>
+                            <td mat-cell *matCellDef="let element" style="width:50%"> {{element.TextCategorie}} </td>
+                          </ng-container>
+                        
+                          <!-- Name Column -->
+           
+                          <ng-container matColumnDef="champs">
+                            <th mat-header-cell *matHeaderCellDef>
+                                
+                                 </th>
+                            <td mat-cell *matCellDef="let element">
+                                <ng-container    >
+                                    <mat-radio-group  *ngIf="element.TextCategorie=='Mouvement régional de la paroi'"  >
+                                        </mat-radio-group>
+                                       
+                                </ng-container>
+                                <ng-container    >
+                                    <mat-radio-group  *ngIf="element.TextCategorie=='Anévrisme local' || element.TextCategorie=='Hypertrophie'"  >
+                                        <mat-radio-button value="{{element.CategorieID}}" [checked]="checked(element.CategorieID,lst.id_categorie)" style="padding-right:20px" *ngFor="let lst of dataSource9"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                        </mat-radio-group>
+                                       
+                                </ng-container>
+                                <ng-container  *ngIf="element.TextCategorie!='Mouvement régional de la paroi' && element.TextCategorie!='Anévrisme local' && element.TextCategorie!='Hypertrophie'"  >
+                                    <mat-form-field style="width:60%">
+                                        <input  formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder="  "  (change)="updateChkbxArray(element.CategorieID,element.CategorieID,'text',$event.target.value)" >
+                                        <mat-error>This field is mandatory.</mat-error>
+                                   </mat-form-field>
+                                 </ng-container>
+            </td> 
+                                </ng-container>
+                              
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                        </table>
+                        <hr/>
+
+                        <table style="width:100%" mat-table [dataSource]="dataSource44" class="mat-elevation-z8">
+                           
+                            <!-- Position Column -->
+                            <ng-container matColumnDef="categorie">
+                              <th mat-header-cell *matHeaderCellDef> 
+                                  Valvules
+                              </th>
+                              <td mat-cell *matCellDef="let element" style="width:50%"> {{element.TextCategorie}} </td>
+                            </ng-container>
+                          
+                            <!-- Name Column -->
+             
+                            <ng-container matColumnDef="champs">
+                              <th mat-header-cell *matHeaderCellDef>
+                                  
+                                   </th>
+                              <td mat-cell *matCellDef="let element">
+                                  <ng-container    >
+                                      <mat-radio-group  *ngIf="element.TextCategorie!='Visualisation de l’ostium coronarien' && element.TextCategorie!='Diamètre de la base de l’aorte' && element.TextCategorie!='Aorte ascendante'"  >
+                                          <mat-radio-button value="{{lst.id_categorie}}"  [checked]="checked(element.CategorieID,lst.id_categorie)" style="padding-right:20px" *ngFor="let lst of dataSource23"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                          </mat-radio-group>
+                                         
+                                  </ng-container>
+                                  <ng-container  *ngIf="element.TextCategorie=='Visualisation de l’ostium coronarien'"  >
+                                      <mat-radio-group    >
+                                          <mat-radio-button value="{{lst.categorie}}"  [checked]="checkedradio(element.CategorieID,lst.categorie)" style="padding-right:20px" *ngFor="let lst of dataSource45"  (change)="updateChkbxArray(element.CategorieID,element.CategorieID,$event.value,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                          </mat-radio-group>
+                                          <ng-container   *ngIf="Masquer(element.CategorieID)"  >
+                                              précisez :  
+                                              <mat-checkbox *ngFor="let lst of dataSource66" [checked]="checked(element.CategorieID,lst.id_categorie)"  style="margin-right:5px" (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" value="{{lst.id_categorie}}"    >{{lst.categorie}}</mat-checkbox>
+                                            </ng-container>
+                                      
+                                  </ng-container>
+                                  <ng-container  *ngIf="element.TextCategorie =='Diamètre de la base de l’aorte' || element.TextCategorie =='Aorte ascendante'"  >
+                                      <mat-form-field style="width:60%">
+                                          <input  formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder="______ cm"  (change)="updateChkbxArray(element.CategorieID,element.CategorieID,'text',$event.target.value)" >
+                                          <mat-error>This field is mandatory.</mat-error>
+                                     </mat-form-field>
+                                   </ng-container>
+              </td> 
+                                  </ng-container>
+                                
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                          </table>
+                          <hr/>
+
+                          
+                            </mat-form-field>
+        
+          <div>
+            <button style="width:auto"  mat-button matStepperPrevious>Précédent</button>
+            <button style="width:auto"  mat-button matStepperNext>Suivant</button>
+          </div>
+      
+        </form>
+      </mat-step>
+
+
+      <!------------------------------------------------------------------------->
+    
+     
+      <mat-step [stepControl]="secondFormGroup">
+          <form [formGroup]="secondFormGroup" >
+            <ng-template matStepLabel>RESULTATS SANGUINS (A JEUN)</ng-template>
+            <u>5.	RESULTATS SANGUINS (A JEUN)</u> <br/>
+            <mat-form-field style="display:block" >
+                <input matInput disabled >
+                <table style="width:100%" mat-table [dataSource]="dataSource46" class="mat-elevation-z8">
+                           
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="categorie">
+                      <th mat-header-cell *matHeaderCellDef> 
+                          RESULTATS SANGUINS (A JEUN)
+                      </th>
+                      <td mat-cell *matCellDef="let element" style="width:50%"> {{element.TextCategorie}} </td>
+                    </ng-container>
+                  
+                    <!-- Name Column -->
+     
+                    <ng-container matColumnDef="champs">
+                      <th mat-header-cell *matHeaderCellDef>
+                          
+                           </th>
+                      <td mat-cell *matCellDef="let element">
+                        
+                          <ng-container    >
+                              <mat-form-field style="width:60%">
+                                  <input  formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder="  "  (change)="updateChkbxArray(element.CategorieID,element.CategorieID,'text',$event.target.value)" >
+                                  <mat-error>This field is mandatory.</mat-error>
+                             </mat-form-field>
+                           </ng-container>
+                         </td> 
+                          </ng-container>
+                        
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                  </table>
+                  <hr/> 
+              </mat-form-field>
+        
+              <div>
+                <button style="width:auto"  mat-button matStepperPrevious>Précédent</button>
+                <button style="width:auto"  mat-button matStepperNext>Suivant</button>
+              </div>
+          
+            </form>
+          </mat-step>  
+          
+             <!-------------------------------------------------------->
+
+      <mat-step [stepControl]="secondFormGroup">
+          <form [formGroup]="secondFormGroup" >
+            <ng-template matStepLabel>APPAREIL LOCOMOTEUR</ng-template>
+            <u>APPAREIL LOCOMOTEUR</u> <br/>
+            <i>6.1  COLONNE VERTEBRALE, NIVEAU DU BASSIN ET LONGUEUR DES JAMBES</i>
+            <mat-form-field style="display:block" >
+                <input matInput disabled >
+                <table style="width:100%" mat-table [dataSource]="dataSource47" class="mat-elevation-z8">
+                           
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="categorie">
+                      <th mat-header-cell *matHeaderCellDef> 
+                          COLONNE VERTEBRALE, NIVEAU DU BASSIN ET LONGUEUR DES JAMBES
+                      </th>
+                      <td mat-cell *matCellDef="let element" style="width:50%"> {{element.TextCategorie}} </td>
+                    </ng-container>
+                  
+                    <!-- Name Column -->
+     
+                    <ng-container matColumnDef="champs">
+                      <th mat-header-cell *matHeaderCellDef>
+                          
+                           </th>
+                      <td mat-cell *matCellDef="let element">
+                        
+                          <ng-container  *ngIf="element.TextCategorie=='Forme de la colonne'"  >
+                              <mat-radio-group    >
+                                  <mat-radio-button value="{{lst.id_categorie}}"  [checked]="checked(element.CategorieID,lst.id_categorie)" style="padding-right:20px" *ngFor="let lst of dataSource48"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                  </mat-radio-group>
+                                  
+                              
+                          </ng-container>
+                          <ng-container  *ngIf="element.TextCategorie=='Niveau du bassin'"  >
+                              <mat-radio-group    >
+                                  <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)" style="padding-right:20px" *ngFor="let lst of dataSource49"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                  </mat-radio-group>
+                                  
+                              
+                          </ng-container>
+                          <ng-container  *ngIf="element.TextCategorie=='Différence de niveau malléolaire'"  >
+                              <mat-radio-group    >
+                                  <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)" style="padding-right:20px" *ngFor="let lst of dataSource23"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                  </mat-radio-group>
+                                  
+                              
+                          </ng-container>
+                          <ng-container  *ngIf="element.TextCategorie=='Rotation cervicale à gauche' || element.TextCategorie=='Rotation cervicale à droite'"  >
+                              
+                                  <mat-form-field  >
+                                      <input  formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder=""  (change)="updateChkbxArray(element.CategorieID,element.CategorieID,'text',$event.target.value)" >
+                                      <mat-error>This field is mandatory.</mat-error>
+                                  
+                                 </mat-form-field>
+                                 <mat-radio-group    >    
+                                    douloureux <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)" style="padding-left:60px" *ngFor="let lst of dataSource9"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                 </mat-radio-group>
+                                
+                                  
+                              
+                          </ng-container>
+                          <ng-container  *ngIf="element.TextCategorie=='Souplesse rachidienne'"  >
+                              <mat-form-field style="width:60%">
+                                  <input  formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder="Distance du bout des doigts au sol	_____cm"  (change)="updateChkbxArray(element.CategorieID,element.CategorieID,'text',$event.target.value)" >
+                                  <mat-error>This field is mandatory.</mat-error>
+                             </mat-form-field>
+                              
+                          </ng-container>
+                         
+      </td> 
+                          </ng-container>
+                        
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                  </table>
+                  <hr/>
+                  <i>6.2  EXAMEN DES HANCHES, DE L’AINE ET DE LA CUISSE</i>
+          <hr/>
+                  <table style="width:100%" mat-table [dataSource]="dataSource51" class="mat-elevation-z8">
+                           
+                      <!-- Position Column -->
+                      <ng-container matColumnDef="categorie">
+                        <th mat-header-cell *matHeaderCellDef> 
+                            Souplesse de la hanche
+                             </th>
+                        <td mat-cell *matCellDef="let element" style="width:50%"> {{element.TextCategorie}} </td>
+                      </ng-container>
+                    
+                      <!-- Name Column -->
+       
+                      <ng-container matColumnDef="champs">
+                        <th mat-header-cell *matHeaderCellDef>
+                            
+                             </th>
+                        <td mat-cell *matCellDef="let element">
+                          
+                            <ng-container  *ngIf="element.TextCategorie=='Forme de la colonne à gauche' || element.TextCategorie=='Forme de la colonne à droite'"  >
+                                <mat-radio-group    >
+                                    <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)" style="padding-right:20px" *ngFor="let lst of dataSource48"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                    </mat-radio-group>
+                                    
+                                
+                            </ng-container>
+                            <ng-container  *ngIf="element.TextCategorie=='Hernie à gauche' || element.TextCategorie=='Hernie à droite'"  >
+                               
+                                    <label style="width:30%" >
+                                        
+                                    </label>
+                                   <mat-radio-group    >    
+                                       <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)" style="width:30%" *ngFor="let lst of dataSource9"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                   </mat-radio-group>
+                                   
+                                
+                            </ng-container>
+                            <ng-container  *ngIf="element.TextCategorie=='Sensibilité à la palpation de l’aine à gauche' || element.TextCategorie=='Sensibilité à la palpation de l’aine à droite'"  >
+                               
+                                    <label style="width:20%" >
+                                        
+                                    </label>
+                                   <mat-radio-group    >    
+                                       <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)" style="width:20%"*ngFor="let lst of dataSource54"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                   </mat-radio-group>
+                                   
+                                     
+                                
+                            </ng-container>
+                            <ng-container  *ngIf="element.TextCategorie!='Sensibilité à la palpation de l’aine à gauche' && element.TextCategorie!='Hernie à gauche' && element.TextCategorie!='Sensibilité à la palpation de l’aine à droite' && element.TextCategorie!='Hernie à droite'"  >
+                               
+                                    <mat-form-field  >
+                                        <input  formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder=""  (change)="updateChkbxArray(element.CategorieID,element.CategorieID,'text',$event.target.value)" >
+                                        <mat-error>This field is mandatory.</mat-error>
+                                    
+                                   </mat-form-field>
+                                   <mat-radio-group    >    
+                                      douloureux <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)" style="padding-left:60px" *ngFor="let lst of dataSource9"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                   </mat-radio-group>
+                                    
+                                    
+                                
+                            </ng-container>
+                           
+                           
+        </td> 
+                            </ng-container>
+                          
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                    </table>
+                    <hr/>
+                  <table style="width:100%" mat-table [dataSource]="dataSource52" class="mat-elevation-z8">
+                           
+                      <!-- Position Column -->
+                      <ng-container matColumnDef="categorie">
+                        <th mat-header-cell *matHeaderCellDef> 
+                            Muscles
+                             </th>
+                        <td mat-cell *matCellDef="let element" style="width:50%"> {{element.TextCategorie}} </td>
+                      </ng-container>
+                    
+                      <!-- Name Column -->
+       
+                      <ng-container matColumnDef="champs">
+                        <th mat-header-cell *matHeaderCellDef>
+                            
+                             </th>
+                        <td mat-cell *matCellDef="let element">
+                          
+                            
+                               
+                                    <label style="width:20%" >
+                                        
+                                    </label>
+                                   <mat-radio-group    >    
+                                       <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)" style="width:20%" *ngFor="let lst of dataSource23" (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                   </mat-radio-group>
+                                   <mat-form-field>
+                                      <input  formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder="précisez : "  (change)="updateChkbxArray(element.CategorieID,element.CategorieID,'text',$event.target.value)" >
+                                      <mat-error>This field is mandatory.</mat-error>
+                                  
+                                 </mat-form-field>
+                                   
+                                
+                       
+                           
+                               </td> 
+                        </ng-container>
+                          
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                    </table>
+                    <hr/>
+                    6.3  EXAMEN DU GENOU
+                    <br/>
+                    <table style="width:100%" mat-table [dataSource]="dataSource53" class="mat-elevation-z8">
+                           
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="categorie">
+                          <th mat-header-cell *matHeaderCellDef> 
+                              EXAMEN DU GENOU
+                               </th>
+                          <td mat-cell *matCellDef="let element" style="width:50%"> {{element.TextCategorie}} </td>
+                        </ng-container>
+                      
+                        <!-- Name Column -->
+         
+                        <ng-container matColumnDef="champs">
+                          <th mat-header-cell *matHeaderCellDef>
+                              
+                               </th>
+                          <td mat-cell *matCellDef="let element">
+                            
+                              
+                                  
+                                     
+                                    
+                                    <ng-container  *ngIf="element.TextCategorie!='Axe de l’articulation du genou à gauche' && element.TextCategorie!='Flexion / Extension à gauche' && element.TextCategorie!='Axe de l’articulation du genou à droite' && element.TextCategorie!='Flexion / Extension à droite'"  >
+                                 
+                                      <label style="width:20%" >
+                                          
+                                      </label>
+                                     <mat-radio-group  *ngFor="let lst of dataSource56"   >  
+                                        <mat-radio-button value="{{element.CategorieID}}" style="width:15%"  [checked]="checked(element.CategorieID,lst.id_categorie)"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.value,'rad')" >{{lst.categorie}}</mat-radio-button>
+                       
+                                         </mat-radio-group>
+                                    </ng-container>
+                                  
+                                  <ng-container  *ngIf="element.TextCategorie=='Axe de l’articulation du genou à gauche' || element.TextCategorie=='Axe de l’articulation du genou à droite'"  >
+                                     
+                                    <label style="width:20%" >
+                                        
+                                    </label>
+                                   <mat-radio-group    >    
+                                       <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)"  style="width:20%" *ngFor="let lst of dataSource55" (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                   </mat-radio-group>
+                                 
+                                </ng-container>
+                                   <ng-container  *ngIf="element.TextCategorie=='Flexion / Extension à gauche' || element.TextCategorie=='Flexion / Extension à droite'"  >
+                                      
+                                          <mat-form-field  >
+                                              <input  formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder=""  (change)="updateChkbxArray(element.CategorieID,element.CategorieID,'text',$event.target.value)" >
+                                              <mat-error>This field is mandatory.</mat-error>
+                                          
+                                         </mat-form-field>
+                                         <mat-radio-group    >    
+                                            douloureux <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)" style="padding-left:60px" *ngFor="let lst of dataSource9"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                         </mat-radio-group>
+                                        
+                                          
+                                      
+                                  </ng-container>
+                                     
+                                  
+                         
+                             
+                                 </td> 
+                          </ng-container>
+                            
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                      </table>
+                      <hr/>
+                      <hr/>
+                      6.4 	EXAMEN DE LA JAMBE, DE LA CHEVILLE ET DU PIED
+                      <br/>
+                      <table style="width:100%" mat-table [dataSource]="dataSource57" class="mat-elevation-z8">
+                             
+                          <!-- Position Column -->
+                          <ng-container matColumnDef="categorie">
+                            <th mat-header-cell *matHeaderCellDef> 
+                EXAMEN DE LA JAMBE, DE LA CHEVILLE ET DU PIED
+                                 </th>
+                            <td mat-cell *matCellDef="let element" style="width:50%"> {{element.TextCategorie}} </td>
+                          </ng-container>
+                        
+                          <!-- Name Column -->
+           
+                          <ng-container matColumnDef="champs">
+                            <th mat-header-cell *matHeaderCellDef>
+                                
+                                 </th>
+                            <td mat-cell *matCellDef="let element">
+                              
+                                
+                                    
+                                       
+                                      
+                                     
+                                    <ng-container  *ngIf="element.TextCategorie=='Supination totale à droite' || element.TextCategorie=='Pronation totale à droite' || element.TextCategorie=='Supination totale à gauche' || element.TextCategorie=='Pronation totale à gauche'"  >
+                                     
+                                      <label style="width:20%" >
+                                          
+                                      </label>
+                                     <mat-radio-group    >    
+                                         <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)"  style="width:20%" *ngFor="let lst of dataSource58" (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                     </mat-radio-group>
+                                    </ng-container>
+                                 
+                                  <ng-container  *ngIf="element.TextCategorie=='Articulation métatarsienne à droite' || element.TextCategorie=='Articulation métatarsienne à gauche'"  >
+                                      
+                                    <label style="width:30%" >
+                                        
+                                    </label>
+                                   <mat-radio-group    >    
+                                       <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)"  style="width:30%" *ngFor="let lst of dataSource59" (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                   </mat-radio-group>
+                                 
+                                </ng-container>
+                                  <ng-container  *ngIf="element.TextCategorie=='Sensibilité de la cheville à droite' || element.TextCategorie=='Sensibilité de la cheville à gauche'"  >
+                                     
+                                    <label style="width:30%" >
+                                        
+                                    </label>
+                                   <mat-radio-group    >    
+                                       <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)"  style="width:30%" *ngFor="let lst of dataSource9" (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                   </mat-radio-group>
+                                  
+                                </ng-container>
+
+                                  <ng-container  *ngIf="element.TextCategorie=='Signe de tiroir antérieur à droite' || element.TextCategorie=='Signe de tiroir antérieur à gauche'"  >
+                                      
+                                    <label style="width:15%" >
+                                        
+                                    </label>
+                                   <mat-radio-group    >    
+                                       <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)"  style="width:20%" *ngFor="let lst of dataSource56" (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" >{{lst.categorie}}</mat-radio-button>
+                                   </mat-radio-group>
+                                  </ng-container>
+                              
+                                     <ng-container  *ngIf="element.TextCategorie=='Dorsiflexion à gauche' || element.TextCategorie=='Flexion plantaire à gauche' || element.TextCategorie=='Dorsiflexion à droite' || element.TextCategorie=='Flexion plantaire à droite'"  >
+                                       
+                                            <mat-form-field    >
+                                                <input  formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder=""  (change)="updateChkbxArray(element.CategorieID,element.CategorieID,'text',$event.target.value)" >
+                                                <mat-error>This field is mandatory.</mat-error>
+                                            
+                                           </mat-form-field>
+                                           <mat-radio-group    >    
+                                              douloureux <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)" style="padding-left:60px" *ngFor="let lst of dataSource9"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" value="{{lst.id_categorie}}">{{lst.categorie}}</mat-radio-button>
+                                           </mat-radio-group>
+                                             
+                                            
+                                        
+                                    </ng-container>
+                                       
+                                    
+                           
+                               
+                                   </td> 
+                            </ng-container>
+                              
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                        </table>
+                        <hr/>
+
+              </mat-form-field>
+        
+              <div>
+                <button style="width:auto"  mat-button matStepperPrevious>Précédent</button>
+                <button style="width:auto"  mat-button matStepperNext>Suivant</button>
+              </div>
+          
+            </form>
+          </mat-step>  
+
+          <mat-step [stepControl]="secondFormGroup">
+              <form [formGroup]="secondFormGroup"  (submit)="onSubmit()"  >
+                <ng-template matStepLabel>RESUME DE L’EVALUATION</ng-template>
+                <u>7.	RESUME DE L’EVALUATION</u> <br/>
+                 <mat-form-field style="display:block" >
+                    <input matInput disabled >
+                    <table style="width:100%" mat-table [dataSource]="dataSource60" class="mat-elevation-z8">
+                           
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="categorie">
+                          <th mat-header-cell *matHeaderCellDef> 
+                              RESUME DE L’EVALUATION
+                               </th>
+                          <td mat-cell *matCellDef="let element" style="width:50%"> {{element.TextCategorie}} </td>
+                        </ng-container>
+                      
+                        <!-- Name Column -->
+         
+                        <ng-container matColumnDef="champs">
+                          <th mat-header-cell *matHeaderCellDef>
+                              
+                               </th>
+                          <td mat-cell *matCellDef="let element">
+                            
+                              
+                                 
+                                     <mat-radio-group *ngFor="let lst of dataSource9">    
+                                         <mat-radio-button value="{{lst.id_categorie}}" [checked]="checked(element.CategorieID,lst.id_categorie)" style="width:20%"  (change)="updateChkbxArray(element.CategorieID,lst.id_categorie,$event.checked,'ts')" value="{{lst.id_categorie}}"  >{{lst.categorie}}</mat-radio-button>
+                                     </mat-radio-group>
+                                     <mat-form-field *ngIf="element.TextCategorie!='APTE A LA PRATIQUE DU FOOTBALL DE HAUT NIVEAU'" >
+                                        <input  formControlName="AutreCtrl_{{element.CategorieID}}"  matInput placeholder="précisez : "  (change)="updateChkbxArray(element.CategorieID,element.CategorieID,'text',$event.target.value)" >
+                                        <mat-error>This field is mandatory.</mat-error>
+                                    
+                                   </mat-form-field>
+                                      
+                                  
+                         
+                             
+                                 </td> 
+                          </ng-container>
+                            
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                      </table>
+                      <hr/>
+                   
+                      <img [src]="imageUrl"  style="width:250px;height:200px">
+                      <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target.files)">
+                    </mat-form-field>
+                  
+              
+        
+                  <div>
+                    <button style="width:auto"  mat-button matStepperPrevious>Précédent</button>
+                    <button style="width:auto" type="submit" mat-button matStepperNext>Envoyer</button>
+                  </div>
+              
+                </form>
+              </mat-step> 
+  </mat-horizontal-stepper>

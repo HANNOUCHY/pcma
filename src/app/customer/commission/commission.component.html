@@ -1,0 +1,75 @@
+<mat-grid-list cols="3" rowHeight="5:1">
+  <mat-grid-tile></mat-grid-tile>
+  <mat-grid-tile>
+      <div class="block-print">
+          <div class="icon-print"><i class="fa fa-print"></i></div>
+          <div class="title-block-print">la liste de mes commissions disponibles à annexet à votre facture</div>
+          <button mat-button color="primary"  class="btn-print">Imprimer</button>
+      </div>
+  </mat-grid-tile>
+  <mat-grid-tile>
+      <div class="block-print" style="background-color: #2e7df1;">
+          <div class="title-block">Montant Provisoire actuel {{dataSource.TotalUnpaid | currency:'€ '}}</div>
+      </div>
+  </mat-grid-tile>
+</mat-grid-list>
+<mat-card>
+  <mat-accordion>
+      <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header class="mat-title">
+              <mat-panel-title class="mat-title-1">
+                  Montant total des commissions en cours (sous réserve des info ci-dessous a recevoir )
+              </mat-panel-title>
+
+              <mat-panel-description class="mat-description-1">
+                  {{dataSource.TotalCommissions | currency:'€ '}}
+              </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class="example-container mat-elevation-z8">
+              <mat-table #table [dataSource]="dataSource.Commissions">
+                 
+                  <!-- Customer Column -->
+                  <ng-container matColumnDef="Customer">
+                      <mat-header-cell *matHeaderCellDef> Client </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.Customer}} </mat-cell>
+                  </ng-container>
+
+                  <!-- Address Column -->
+                  <ng-container matColumnDef="Address">
+                      <mat-header-cell *matHeaderCellDef> Adresse </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.Address}} </mat-cell>
+                  </ng-container>
+
+                  <!-- InvoiceNumber Column -->
+                  <ng-container matColumnDef="InvoiceNumber">
+                      <mat-header-cell *matHeaderCellDef> Facture </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.InvoiceNumber}} </mat-cell>
+                  </ng-container>
+
+                  <!-- Amount Unavailable Column -->
+                  <ng-container matColumnDef="AmountUnavailable">
+                      <mat-header-cell *matHeaderCellDef> Montant indisponible </mat-header-cell>
+                      <mat-cell class="AmountUnavailable" *matCellDef="let element"> <span *ngIf="element.IsAvailable==false"> {{element.Amount | currency:'€ '}}</span> </mat-cell>
+                  </ng-container>
+                  <!-- Amount available Column -->
+                  <ng-container matColumnDef="AmountAvailable">
+                      <mat-header-cell *matHeaderCellDef> Montant disponible </mat-header-cell>
+                      <mat-cell class="AmountAvailable" *matCellDef="let element"> <span *ngIf="element.IsAvailable==true">{{element.Amount | currency:'€ '}}</span> </mat-cell>
+                  </ng-container>
+                  <!-- Amount InvoiceLink -->
+                  <ng-container matColumnDef="InvoiceLink">
+                      <mat-header-cell *matHeaderCellDef> Voir </mat-header-cell>
+                      <mat-cell *matCellDef="let element">
+                          <a *ngIf="element.IsAvailable==true" class="btn btn-sm btn-success" target="blanck" href="{{element.InvoiceLink}}"><i class="fa fa-file"></i></a>
+                          <a *ngIf="element.IsAvailable==false" class="btn btn-sm btn-danger" target="blanck" href="{{element.InvoiceLink}}"><i class="fa fa-file"></i></a>
+                      </mat-cell>
+                  </ng-container>
+                  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+              </mat-table>
+
+              <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"> </mat-paginator>
+          </div>
+      </mat-expansion-panel>
+  </mat-accordion>
+</mat-card>
